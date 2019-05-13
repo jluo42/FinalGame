@@ -1,6 +1,8 @@
 "use strict";
 var game = new Phaser.Game(1200, 800, Phaser.AUTO);
 var menuText;
+var score = 0;
+var scoreText;
 //var timer;
 //var total = 0;
 
@@ -71,6 +73,9 @@ Play.prototype = {
 		//display bombNum UI text.
 		bombNumText = game.add.text(950,93, '0000', {fontSize: '40px', fill: '#000'});
 
+		//scoretext
+		 scoreText = game.add.text(16, 16, '0% Diffused', { fontSize: '32px', fill: '#674' });
+
 		//userInput = game.input.keyboard;
 		keyNum0 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
 		keyNum1 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1);
@@ -97,11 +102,7 @@ Play.prototype = {
 		console.log(num3.keyCode);
 		console.log(num4.keyCode);
 
-		//timer
-		//timer = game.time.create(false);
-		//timer.loop(10000, updateCounter, this);
-		//timer.start();
-		//game.time.events.add(Phaser.Timer.SECOND * 180, fadePicture, this);
+		
 		var me = this;
 		me.startTime = new Date();
 		me.totalTime = 60;
@@ -119,7 +120,7 @@ Play.prototype = {
 
         var me = this;
 
-        me.timeLabel = me.game.add.text(me.game.world.centerX, 100, "00:00", {font: "100px Arial", fill: "#000"}); 
+        me.timeLabel = me.game.add.text(me.game.world.centerX, 10, "00:00", {font: "100px Arial", fill: "#000"}); 
         me.timeLabel.anchor.setTo(0.5, 0);
         me.timeLabel.align = 'center';
 
@@ -155,15 +156,6 @@ Play.prototype = {
 }
 
     },
-	/*render: function()
-	{
-		//game.debug.text("Time until event: " + game.time.totalElapsedSeconds(), 32, 32);
-		 //game.debug.text('Time until event: ' + timer.duration.toFixed(0), 32, 32);
-		 //game.debug.text('Time until event: ' + timer.duration.toFixed(0), 32, 32);
-		// game.debug.text('Loop Count: ' + total, 32, 64);
-
-	},
-	*/
 
 
 	update: function() {
@@ -187,6 +179,14 @@ Play.prototype = {
 					if(num4.isDown == true) {
 						console.log('hit');
 						//game.state.start('GameOver');
+						score += 10;
+   						scoreText.text = score + '% Diffused';
+
+   						//win condition
+   						if (score >= 100)
+   						{
+   							game.state.start('GameWin');
+   						}
 						getNewCode();
 					}
 				}
@@ -198,11 +198,6 @@ Play.prototype = {
 	}
 }
 
-/*function fadePicture()
-	{
-		 game.state.start('GameOver');
-	}
-*/
 
 function updateCounter() {
 
@@ -237,8 +232,26 @@ GameOver.prototype = {
 	}
 }
 
+var GameWin = function(game) {};
+GameWin.prototype = {
+	preload: function(){
+
+	},
+
+	create: function(){
+		menuText = game.add.text(300, 400, 'You have defused the bomb!!! Press Spacebar to play again', { fontSize: '32px', fill: '#000' });
+	},
+
+	update: function(){
+			if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+      		game.state.start('Play');
+	}
+	}
+}
+
 //Game States
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
 game.state.add('GameOver', GameOver);
+game.state.add('GameWin', GameWin);
 game.state.start('MainMenu');
