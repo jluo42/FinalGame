@@ -1,3 +1,11 @@
+// TEAM NUMBER 46
+// TEAM NAME: DEFUSERS
+// Johnny Luo
+// Reese Chong
+// Timothy Gee
+// Benjamin Tran
+// GITHUB REPO: https://github.com/jluo42/FinalGame
+
 "use strict";
 var game = new Phaser.Game(1200, 800, Phaser.AUTO);
 var menuText;
@@ -12,12 +20,18 @@ MainMenu.prototype = {
 		console.log("MainMenu: preload");
 		game.load.image('bomb', 'assets/img/bomb.png');
 		game.load.image('Disarmbackground', 'assets/img/Disarmbackground.png');
+		game.load.audio('click', 'assets/audio/click.mp3');
+		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 128, 128);
-		game.load.spritesheet('diffuser', 'assets/img/diffuser.png', 10, 128);
+		game.load.spritesheet('diffuser', 'assets/img/diffuser.png', 128, 128);
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';	
-		 menuText = game.add.text(300, 400, 'DEFUZE OR DIE!!! Press Spacebar to play', { fontSize: '32px', fill: '#000' });
+		 menuText = game.add.text(300, 200, 'DEFUZE OR DIE!!! Press Spacebar to play', { fontSize: '32px', fill: '#000' });
+		 menuInstruction = game.add.text(300, 300, 'The Keycodes represents a number in the number keypad. \nFor example the number 101 would be #5 on the number pad. \nDecode all the keycodes and press and hold all \nfour of the keycodes to defuse the bomb. \nDO NOT LET GO OF THE NUMBERS. ', { fontSize: '25px', fill: '#000' });
+		//adding background music and looping it all the way.
+		backgroundMusic = game.add.audio('backAudio');
+		backgroundMusic.loopFull();
 	},
 
 	update: function() {
@@ -26,8 +40,10 @@ MainMenu.prototype = {
 		}
 	}
 }
-
+var menuInstruction;
+var backgroundMusic;
 var bomb;
+var click;
 var numPresent = false;
 var bombNumText;
 var rndbombNum;
@@ -37,6 +53,8 @@ var num2;
 var num3;
 var num4;
 var keyNum0, keyNum1, keyNum2, keyNum3, keyNum4, keyNum5, keyNum6, keyNum7, keyNum8, keyNum9;
+var keyText1, keyText2, keyText3, keyText4;
+var keyNumInstruct;
 var numPadArray;
 
 var Play = function(game) {};
@@ -57,6 +75,7 @@ Play.prototype = {
 		var Disarmbackground = game.add.sprite(0,0,'Disarmbackground');
 		Disarmbackground.height = game.height;
 		Disarmbackground.width = game.width;
+
 
 		//create civilian
 		var civilian01 = game.add.sprite( 200, 400, 'civilian01');
@@ -88,7 +107,7 @@ Play.prototype = {
 		keyNum8 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_8);
 		keyNum9 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9);
 
-		
+		//add all the nums to an array and having the variable randomly pick a index of the array.
 		numPadArray = [keyNum0, keyNum1, keyNum2, keyNum3, keyNum4, keyNum5, keyNum6, keyNum7, keyNum8, keyNum9];
 		num1 = game.rnd.pick(numPadArray);
 		num2 = game.rnd.pick(numPadArray);
@@ -102,20 +121,31 @@ Play.prototype = {
 		console.log(num3.keyCode);
 		console.log(num4.keyCode);
 
-		
+		//creating the text with keyCodes
+		keyText1 = game.add.text(250, 530, num1.keyCode, {font: "100px Arial", fill: "#000"}); 
+		keyText2 = game.add.text(450, 530, num2.keyCode, {font: "100px Arial", fill: "#000"}); 
+		keyText3 = game.add.text(650, 530, num3.keyCode, {font: "100px Arial", fill: "#000"}); 
+		keyText4 = game.add.text(850, 530, num4.keyCode, {font: "100px Arial", fill: "#000"}); 
+
+
+		//text UI for in-game instructions 
+		keyNumInstruct = game.add.text(50, 700, "96 = 0; 97 = 1; 98 = 2; 99 = 3; 100 = 4; 101 = 5; 102 = 6; 103 = 7; 104 = 8; 105 = 9 ", {font: "30px Arial", fill: "#000"}); 
+
+		//timer implementations
 		var me = this;
 		me.startTime = new Date();
 		me.totalTime = 60;
 		me.timeElapsed = 0;
-
 		me.createTimer();
-
 		me.gameTimer = game.time.events.loop(100, function(){
 		me.updateTimer();
 		});
 		
+		//sound for click
+		click = game.add.audio('click');
 	},
 
+	//function for the timer
 	createTimer: function(){
 
         var me = this;
@@ -125,8 +155,8 @@ Play.prototype = {
         me.timeLabel.align = 'center';
 
     },
-
-    updateTimer: function(){
+    //function to update the timer
+   updateTimer: function(){
 
         var me = this;
 
@@ -153,7 +183,7 @@ Play.prototype = {
 
         if(me.timeElapsed >= me.totalTime){
     	game.state.start('GameOver');
-}
+		}
 
     },
 
@@ -170,14 +200,19 @@ Play.prototype = {
 			game.state.start('GameOver');
 		}
 
+		//key presses for the mechanic of the game.
 		if(num1.isDown == true){
 			console.log('hit');
+			click.play();
 			if(num2.isDown == true) {
 				console.log('hit');
+				click.play();
 				if(num3.isDown == true) {
 					console.log('hit');
+					click.play();
 					if(num4.isDown == true) {
 						console.log('hit');
+						click.play();
 						//game.state.start('GameOver');
 						score += 10;
    						scoreText.text = score + '% Diffused';
@@ -198,13 +233,14 @@ Play.prototype = {
 	}
 }
 
-
+//updates the score counter
 function updateCounter() {
 
     total++;
 
 }
-	
+
+//grabs a new code for the mechanic whenever it is compeleted.
 function getNewCode() {
 		num1 = game.rnd.pick(numPadArray);
 		num2 = game.rnd.pick(numPadArray);
@@ -213,6 +249,11 @@ function getNewCode() {
 		rndbombNum = game.rnd.integerInRange(1000,9999);
 		numPresent = true;
 		bombNumText.text = rndbombNum;
+		keyText1.text = num1.keyCode
+		keyText2.text = num2.keyCode
+		keyText3.text = num3.keyCode
+		keyText4.text = num4.keyCode
+
 }
 
 var GameOver = function(game) {};
