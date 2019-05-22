@@ -20,15 +20,20 @@ MainMenu.prototype = {
 		console.log("MainMenu: preload");
 		game.load.image('bomb', 'assets/img/bomb.png');
 		game.load.image('Disarmbackground', 'assets/img/Disarmbackground.png');
+		game.load.image('MainMenu01', 'assets/img/MainMenu01.png');
+		game.load.image('MainMenu02', 'assets/img/MainMenu02.png');
+		game.load.image('MainMenu03', 'assets/img/MainMenu03.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
 		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 128, 128);
 		game.load.spritesheet('diffuser', 'assets/img/diffuser.png', 128, 128);
+		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 128, 128);
 	},
 	create: function() {
-		 game.stage.backgroundColor  = '#736357';	
-		 menuText = game.add.text(300, 200, 'DEFUZE OR DIE!!! Press Spacebar to play', { fontSize: '32px', fill: '#000' });
-		 menuInstruction = game.add.text(300, 300, 'The Keycodes represents a number in the number keypad. \nFor example the number 101 would be #5 on the number pad. \nDecode all the keycodes and press and hold all \nfour of the keycodes to defuse the bomb. \nDO NOT LET GO OF THE NUMBERS. ', { fontSize: '25px', fill: '#000' });
+		 game.stage.backgroundColor  = '#736357';
+		 game.add.image(0,0, 'MainMenu01');	
+		 menuText = game.add.text(750, 380, 'Press Spacebar \n     To Play', { fontSize: '35px', fill: '#000' });
+		// menuInstruction = game.add.text(300, 300, 'The Keycodes represents a number in the number keypad. \nFor example the number 101 would be #5 on the number pad. \nDecode all the keycodes and press and hold all \nfour of the keycodes to defuse the bomb. \nDO NOT LET GO OF THE NUMBERS. ', { fontSize: '25px', fill: '#000' });
 		//adding background music and looping it all the way.
 		backgroundMusic = game.add.audio('backAudio');
 		backgroundMusic.loopFull();
@@ -38,12 +43,14 @@ MainMenu.prototype = {
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('Play');
 		}
+
 	}
 }
 var menuInstruction;
 var backgroundMusic;
 var bomb;
 var click;
+var displayNum1;
 var numPresent = false;
 var bombNumText;
 var rndbombNum;
@@ -60,7 +67,9 @@ var numPadArray;
 var Play = function(game) {};
 Play.prototype = {
 	init: function() {
-		score = 0;//reset score
+		//reset score
+		score = 0;
+
 	},
 	
 	preload: function() {
@@ -78,10 +87,10 @@ Play.prototype = {
 
 
 		//create civilian
-		var civilian01 = game.add.sprite( 200, 400, 'civilian01');
+		var civilian01 = game.add.sprite(200, 400, 'civilian01');
 
 		//create diffuser
-		var diffuser = game.add.sprite( 100, 400, 'diffuser');
+		var diffuser01 = game.add.sprite(500, 400, 'diffuser01');
 		
 		//bomb added to the top left.
 		bomb = game.add.sprite(850,0, 'bomb');
@@ -90,7 +99,11 @@ Play.prototype = {
 		bomb.scale.setTo(.3,.3);
 
 		//display bombNum UI text.
-		bombNumText = game.add.text(950,93, '0000', {fontSize: '40px', fill: '#000'});
+		//bombNumText = game.add.text(950,93, '0000', {fontSize: '40px', fill: '#000'});
+		displayNum1 = game.add.text(945,93, '0', {fontSize: '40px', fill: '#000'});
+		var displayNum2 = game.add.text(970,93, '0', {fontSize: '40px', fill: '#000'});
+		var displayNum3 = game.add.text(995,93, '0', {fontSize: '40px', fill: '#000'});
+		var displayNum4 = game.add.text(1020,93, '0', {fontSize: '40px', fill: '#000'});
 
 		//scoretext
 		 scoreText = game.add.text(16, 16, '0% Diffused', { fontSize: '32px', fill: '#674' });
@@ -210,15 +223,19 @@ Play.prototype = {
 		if(num1.isDown == true){
 			console.log('hit');
 			click.play();
+			displayText(num1);
 			if(num2.isDown == true) {
 				console.log('hit');
 				click.play();
+				displayText(num2);
 				if(num3.isDown == true) {
 					console.log('hit');
 					click.play();
+					displayText(num3);
 					if(num4.isDown == true) {
 						console.log('hit');
 						click.play();
+						displayText(num4);
 						//game.state.start('GameOver');
 						score += 10;
    						scoreText.text = score + '% Diffused';
@@ -234,11 +251,44 @@ Play.prototype = {
 			}
 			
 		}
+		
 		//console.log(game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1));
 		//console.log(userInput);
 	}
 }
 
+function displayText(numCode) {
+	if(numCode.keyCode == 96) {
+	displayNum1.text = '0';
+	}
+	if(numCode.keyCode == 97) {
+	displayNum1.text = '1';
+	}
+	if(numCode.keyCode == 98) {
+	displayNum1.text = '2';
+	}
+	if(numCode.keyCode == 99) {
+	displayNum1.text = '3';
+	}
+	if(numCode.keyCode == 100) {
+	displayNum1.text = '4';
+	}
+	if(numCode.keyCode == 101) {
+	displayNum1.text = '5';
+	}
+	if(numCode.keyCode == 102) {
+	displayNum1.text = '6';
+	}
+	if(numCode.keyCode == 103) {
+	displayNum1.text = '7';
+	}
+	if(numCode.keyCode == 104) {
+	displayNum1.text = '8';
+	}
+	if(numCode.keyCode == 105) {
+	displayNum1.text = '9';
+	}
+}
 //updates the score counter
 function updateCounter() {
 
@@ -256,7 +306,7 @@ function getNewCode() {
 		
 		rndbombNum = game.rnd.integerInRange(1000,9999);
 		numPresent = true;
-		bombNumText.text = rndbombNum;
+		//bombNumText.text = rndbombNum;
 		keyText1.text = num1.keyCode;
 		keyText2.text = num2.keyCode;
 		keyText3.text = num3.keyCode;
