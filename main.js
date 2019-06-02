@@ -26,8 +26,11 @@ MainMenu.prototype = {
 		game.load.audio('click', 'assets/audio/click.mp3');
 		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 128, 128);
-		game.load.spritesheet('diffuser', 'assets/img/diffuser.png', 128, 128);
+		game.load.spritesheet('civilian02', 'assets/img/civilian02.png', 128, 128);
+		game.load.spritesheet('civilian03', 'assets/img/civilian03.png', 128, 128);
+		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 128, 128);
 		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 128, 128);
+		game.load.spritesheet('officer01', 'assets/img/officer01.png', 128, 128);
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -50,7 +53,7 @@ var menuInstruction;
 var backgroundMusic;
 var bomb;
 var click;
-var displayNum1;
+var displayNum1, displayNum2, displayNum3, displayNum4;
 var numPresent = false;
 var bombNumText;
 var rndbombNum;
@@ -86,10 +89,11 @@ Play.prototype = {
 		Disarmbackground.width = game.width;
 
 
-		//create civilian
-		var civilian01 = game.add.sprite(200, 400, 'civilian01');
+		//create civilian sprite
+		//var civilian01 = game.add.sprite(200, 400, 'civilian01');
+		var civilian02 = game.add.sprite(500,500, 'civilian02');
 
-		//create diffuser
+		//create diffuser sprite
 		var diffuser01 = game.add.sprite(500, 400, 'diffuser01');
 		
 		//bomb added to the top left.
@@ -101,9 +105,9 @@ Play.prototype = {
 		//display bombNum UI text.
 		//bombNumText = game.add.text(950,93, '0000', {fontSize: '40px', fill: '#000'});
 		displayNum1 = game.add.text(945,93, '0', {fontSize: '40px', fill: '#000'});
-		var displayNum2 = game.add.text(970,93, '0', {fontSize: '40px', fill: '#000'});
-		var displayNum3 = game.add.text(995,93, '0', {fontSize: '40px', fill: '#000'});
-		var displayNum4 = game.add.text(1020,93, '0', {fontSize: '40px', fill: '#000'});
+		displayNum2 = game.add.text(970,93, '0', {fontSize: '40px', fill: '#000'});
+		displayNum3 = game.add.text(995,93, '0', {fontSize: '40px', fill: '#000'});
+		displayNum4 = game.add.text(1020,93, '0', {fontSize: '40px', fill: '#000'});
 
 		//scoretext
 		 scoreText = game.add.text(16, 16, '0% Diffused', { fontSize: '32px', fill: '#674' });
@@ -140,7 +144,7 @@ Play.prototype = {
 		keyText3 = game.add.text(650, 530, num3.keyCode, {font: "100px Arial", fill: "#000"}); 
 		keyText4 = game.add.text(850, 530, num4.keyCode, {font: "100px Arial", fill: "#000"}); 
 
-
+		//checks for repeating numbers on the sequence. If so, get a new code.
 		if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
 		{
 			getNewCode();
@@ -223,19 +227,19 @@ Play.prototype = {
 		if(num1.isDown == true){
 			console.log('hit');
 			click.play();
-			displayText(num1);
+			displayText(num1, displayNum1);
 			if(num2.isDown == true) {
 				console.log('hit');
 				click.play();
-				displayText(num2);
+				displayText(num2, displayNum2);
 				if(num3.isDown == true) {
 					console.log('hit');
 					click.play();
-					displayText(num3);
+					displayText(num3, displayNum3);
 					if(num4.isDown == true) {
 						console.log('hit');
 						click.play();
-						displayText(num4);
+						displayText(num4, displayNum4);
 						//game.state.start('GameOver');
 						score += 10;
    						scoreText.text = score + '% Diffused';
@@ -257,36 +261,36 @@ Play.prototype = {
 	}
 }
 
-function displayText(numCode) {
+function displayText(numCode, displayNum) {
 	if(numCode.keyCode == 96) {
-	displayNum1.text = '0';
+	displayNum.text = '0';
 	}
 	if(numCode.keyCode == 97) {
-	displayNum1.text = '1';
+	displayNum.text = '1';
 	}
 	if(numCode.keyCode == 98) {
-	displayNum1.text = '2';
+	displayNum.text = '2';
 	}
 	if(numCode.keyCode == 99) {
-	displayNum1.text = '3';
+	displayNum.text = '3';
 	}
 	if(numCode.keyCode == 100) {
-	displayNum1.text = '4';
+	displayNum.text = '4';
 	}
 	if(numCode.keyCode == 101) {
-	displayNum1.text = '5';
+	displayNum.text = '5';
 	}
 	if(numCode.keyCode == 102) {
-	displayNum1.text = '6';
+	displayNum.text = '6';
 	}
 	if(numCode.keyCode == 103) {
-	displayNum1.text = '7';
+	displayNum.text = '7';
 	}
 	if(numCode.keyCode == 104) {
-	displayNum1.text = '8';
+	displayNum.text = '8';
 	}
 	if(numCode.keyCode == 105) {
-	displayNum1.text = '9';
+	displayNum.text = '9';
 	}
 }
 //updates the score counter
