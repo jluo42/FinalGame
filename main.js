@@ -31,6 +31,7 @@ MainMenu.prototype = {
 		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 128, 128);
 		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 128, 128);
 		game.load.spritesheet('officer01', 'assets/img/officer01.png', 128, 128);
+		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -53,6 +54,7 @@ var menuInstruction;
 var backgroundMusic;
 var bomb;
 var click;
+var chopper;
 var displayNum1, displayNum2, displayNum3, displayNum4;
 var numPresent = false;
 var bombNumText;
@@ -82,7 +84,8 @@ Play.prototype = {
 
 
 	create: function() {
-
+		//enabling physics for the game
+		game.physics.startSystem(Phaser.Physics.ARCADE);
 		//create background
 		var Disarmbackground = game.add.sprite(0,0,'Disarmbackground');
 		Disarmbackground.height = game.height;
@@ -95,7 +98,18 @@ Play.prototype = {
 
 		//create diffuser sprite
 		var diffuser01 = game.add.sprite(500, 400, 'diffuser01');
-		
+
+		//creating chopper sprite atlas
+		chopper = game.add.sprite(0,0, 'chopper', 'Helicopter1');
+		chopper.scale.setTo(0.08,0.08);
+		this.physics.arcade.enable(chopper);
+		chopper.enableBody = true;
+		chopper.body.velocity.x = 100;
+
+		//set chopper animations
+		chopper.animations.add('chopperFly', [0,1], 10, true);
+
+
 		//bomb added to the top left.
 		bomb = game.add.sprite(850,0, 'bomb');
 
@@ -130,13 +144,6 @@ Play.prototype = {
 		num2 = game.rnd.pick(numPadArray);
 		num3 = game.rnd.pick(numPadArray);
 		num4 = game.rnd.pick(numPadArray);
-
-		
-		//console.log(userInput);
-		console.log(num1.keyCode);
-		console.log(num2.keyCode);
-		console.log(num3.keyCode);
-		console.log(num4.keyCode);
 
 		//creating the text with keyCodes
 		keyText1 = game.add.text(250, 530, num1.keyCode, {font: "100px Arial", fill: "#000"}); 
@@ -211,8 +218,12 @@ Play.prototype = {
 
 
 	update: function() {
+		//helicopter animation
+		chopper.animations.play('chopperFly');
 
-
+		//wraps the helicopter around the map
+		game.world.wrap(chopper, 0, true);
+		
 		/*if(total == 1)
 		{
 			total = 0;
@@ -254,7 +265,7 @@ Play.prototype = {
 				}
 			}
 			
-		}
+		} 
 		
 		//console.log(game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1));
 		//console.log(userInput);
@@ -264,7 +275,7 @@ Play.prototype = {
 function displayText(numCode, displayNum) {
 	if(numCode.keyCode == 96) {
 	displayNum.text = '0';
-	}
+	} 
 	if(numCode.keyCode == 97) {
 	displayNum.text = '1';
 	}
