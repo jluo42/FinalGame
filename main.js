@@ -26,6 +26,8 @@ MainMenu.prototype = {
 		game.load.image('MainMenu03', 'assets/img/MainMenu03.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
 		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
+		game.load.audio('beep', 'assets/audio/beep.mp3');
+		game.load.audio('error', 'assets/audio/error.mp3');
 		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 920, 1300);
 		game.load.spritesheet('civilian02', 'assets/img/civilian02.png', 800, 1400);
 		game.load.spritesheet('civilian03', 'assets/img/civilian03.png', 800, 1300);
@@ -92,6 +94,8 @@ var keyText1, keyText2, keyText3, keyText4;
 var keyNumInstruct;
 var numPadArray;
 var check;
+var beep;
+var error;
 
 var Play = function(game) {};
 Play.prototype = {
@@ -213,6 +217,10 @@ Play.prototype = {
 			getNewCode();
 		}
 		*/
+
+		//bomb sounds
+		beep = game.add.audio('beep');
+		error = game.add.audio('error');
 		
 		//text UI for in-game instructions 
 		keyNumInstruct = game.add.text(455, 550, "96 = 0;    101 = 5\n97 = 1;    102 = 6; \n\n98 = 2;    103 = 7; \n99 = 3;    104 = 8; \n100 = 4;  105 = 9 ", {font: "30px Arial", fill: "#000"});
@@ -221,7 +229,7 @@ Play.prototype = {
 		//timer implementations
 		var me = this;
 		me.startTime = new Date();
-		me.totalTime = 60;
+		me.totalTime = 120;
 		me.timeElapsed = 0;
 		me.createTimer();
 		me.gameTimer = game.time.events.loop(100, function(){
@@ -309,18 +317,22 @@ Play.prototype = {
 		if(num1.isDown == true){
 			console.log('hit');
 			click.play();
+			beep.play();
 			displayText(num1, displayNum1);
 			if(num2.isDown == true) {
 				console.log('hit');
 				click.play();
+				beep.play();
 				displayText(num2, displayNum2);
 				if(num3.isDown == true) {
 					console.log('hit');
 					click.play();
+					beep.play();
 					displayText(num3, displayNum3);
 					if(num4.isDown == true) {
 						console.log('hit');
 						click.play();
+						beep.play();
 						displayText(num4, displayNum4);
 						//game.state.start('GameOver');
 						//score += 10;
@@ -396,6 +408,7 @@ function shuffle(array) {
 }
 
 function checker()	{
+	error.play();
 	score -= 10;
 	getNewCode();
 }
