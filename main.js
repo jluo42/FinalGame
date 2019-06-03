@@ -32,6 +32,8 @@ MainMenu.prototype = {
 		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 128, 128);
 		game.load.spritesheet('officer01', 'assets/img/officer01.png', 128, 128);
 		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
+		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
+		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -55,6 +57,8 @@ var backgroundMusic;
 var bomb;
 var click;
 var chopper;
+var van;
+var copCar, copCar1;
 var displayNum1, displayNum2, displayNum3, displayNum4;
 var numPresent = false;
 var bombNumText;
@@ -116,6 +120,16 @@ Play.prototype = {
 		//set chopper animations
 		chopper.animations.add('chopperFly', [0,1], 10, true);
 
+		//creating news van
+		van = game.add.sprite(20,270, 'van', 'NewsVan1');
+		van.scale.setTo(0.20, 0.20);
+
+		//creating the police car.
+		copCar = game.add.sprite(775,425, 'copCar', 'PoliceCar1');
+		copCar.scale.setTo(0.25, 0.25);
+		copCar1 = game.add.sprite(450,425, 'copCar', 'PoliceCar1');
+		copCar1.scale.setTo(-0.25, 0.25);
+
 
 		//bomb added to the top left.
 		bomb = game.add.sprite(850,0, 'bomb');
@@ -131,7 +145,7 @@ Play.prototype = {
 		displayNum4 = game.add.text(1020,93, '0', {fontSize: '40px', fill: '#000'});
 
 		//scoretext
-		 scoreText = game.add.text(16, 16, '0% Diffused', { fontSize: '32px', fill: '#674' });
+		scoreText = game.add.text(10, 10, '0% Diffused', { fontSize: '32px', fill: '#000' });
 
 		//userInput = game.input.keyboard;
 		keyNum0 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
@@ -160,10 +174,10 @@ Play.prototype = {
 		num10 = numPadArray[9];
 
 		//creating the text with keyCodes
-		keyText1 = game.add.text(250, 530, num1.keyCode, {font: "100px Arial", fill: "#000"}); 
-		keyText2 = game.add.text(450, 530, num2.keyCode, {font: "100px Arial", fill: "#000"}); 
-		keyText3 = game.add.text(650, 530, num3.keyCode, {font: "100px Arial", fill: "#000"}); 
-		keyText4 = game.add.text(850, 530, num4.keyCode, {font: "100px Arial", fill: "#000"}); 
+		keyText1 = game.add.text(400, 500, num1.keyCode, {font: "38px Arial", fill: "#000"}); 
+		keyText2 = game.add.text(500, 500, num2.keyCode, {font: "38px Arial", fill: "#000"}); 
+		keyText3 = game.add.text(600, 500, num3.keyCode, {font: "38px Arial", fill: "#000"}); 
+		keyText4 = game.add.text(700, 500, num4.keyCode, {font: "38px Arial", fill: "#000"}); 
 
 		//checks for repeating numbers on the sequence. If so, get a new code.
 		/*if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
@@ -172,10 +186,8 @@ Play.prototype = {
 		}
 		*/
 		
-
-
 		//text UI for in-game instructions 
-		keyNumInstruct = game.add.text(50, 700, "96 = 0; 97 = 1; 98 = 2; 99 = 3; 100 = 4; 101 = 5; 102 = 6; 103 = 7; 104 = 8; 105 = 9 ", {font: "30px Arial", fill: "#000"}); 
+		keyNumInstruct = game.add.text(455, 580, "96 = 0;    101 = 5\n97 = 1;    102 = 6; \n98 = 2;    103 = 7; \n99 = 3;    104 = 8; \n100 = 4;  105 = 9 ", {font: "30px Arial", fill: "#000"});
 
 		//timer implementations
 		var me = this;
