@@ -323,15 +323,19 @@ Play.prototype = {
 						click.play();
 						displayText(num4, displayNum4);
 						//game.state.start('GameOver');
-						score += 10;
+						//score += 10;
    						scoreText.text = score + '% Diffused';
 
    						//win condition
+
    						if (score >= 100)
    						{
    							game.state.start('GameWin');
    						}
-						getNewCode();
+   						game.paused = true;
+   						game.paused = false;
+   						game.time.events.add(Phaser.Timer.SECOND * 4, getNewCode, this);
+						//getNewCode();
 					}
 
 					else
@@ -437,6 +441,7 @@ function updateCounter() {
 
 //grabs a new code for the mechanic whenever it is compeleted.
 function getNewCode() {
+	//game.paused = false;
 		shuffle(numPadArray);
 		num1 = numPadArray[0];
 		num2 = numPadArray[1];
@@ -459,7 +464,7 @@ function getNewCode() {
 		keyText3.text = num3.keyCode;
 		keyText4.text = num4.keyCode;
 
-		
+		score += 10;
 
 }
 
