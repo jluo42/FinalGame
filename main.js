@@ -64,6 +64,12 @@ var num1;
 var num2; 
 var num3;
 var num4;
+var num5;
+var num6;
+var num7;
+var num8;
+var num9;
+var num10;
 var keyNum0, keyNum1, keyNum2, keyNum3, keyNum4, keyNum5, keyNum6, keyNum7, keyNum8, keyNum9;
 var keyText1, keyText2, keyText3, keyText4;
 var keyNumInstruct;
@@ -141,10 +147,17 @@ Play.prototype = {
 
 		//add all the nums to an array and having the variable randomly pick a index of the array.
 		numPadArray = [keyNum0, keyNum1, keyNum2, keyNum3, keyNum4, keyNum5, keyNum6, keyNum7, keyNum8, keyNum9];
-		num1 = game.rnd.pick(numPadArray);
-		num2 = game.rnd.pick(numPadArray);
-		num3 = game.rnd.pick(numPadArray);
-		num4 = game.rnd.pick(numPadArray);
+		shuffle(numPadArray);
+		num1 = numPadArray[0];
+		num2 = numPadArray[1];
+		num3 = numPadArray[2];
+		num4 = numPadArray[3];
+		num5 = numPadArray[4];
+		num6 = numPadArray[5];
+		num7 = numPadArray[6];
+		num8 = numPadArray[7];
+		num9 = numPadArray[8];
+		num10 = numPadArray[9];
 
 		//creating the text with keyCodes
 		keyText1 = game.add.text(250, 530, num1.keyCode, {font: "100px Arial", fill: "#000"}); 
@@ -153,10 +166,13 @@ Play.prototype = {
 		keyText4 = game.add.text(850, 530, num4.keyCode, {font: "100px Arial", fill: "#000"}); 
 
 		//checks for repeating numbers on the sequence. If so, get a new code.
-		if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
+		/*if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
 		{
 			getNewCode();
 		}
+		*/
+		
+
 
 		//text UI for in-game instructions 
 		keyNumInstruct = game.add.text(50, 700, "96 = 0; 97 = 1; 98 = 2; 99 = 3; 100 = 4; 101 = 5; 102 = 6; 103 = 7; 104 = 8; 105 = 9 ", {font: "30px Arial", fill: "#000"}); 
@@ -280,16 +296,40 @@ Play.prototype = {
    						}
 						getNewCode();
 					}
+
+					else
+						if (num1.isDown == false || num2.isDown == false || num3.isDown == false)
+						{
+							checker();
+						}
+
+						if (num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+							checker();
 				}
-			}
-				//Error here because check is always true at this moment, and num2.isDown is always false the moment num1.isDown is True. 
-				/*else{
-					if (check == true)
+
+				else
+				{
+					if (num1.isDown == false || num2.isDown == false)
 					{
 						checker();
 					}
+
+					if(num4.isDown == true || num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+						checker();
+
 				}
-		*/
+			}
+				
+				else{
+					if (num1.isDown == false)
+					{
+						checker();
+					}
+
+					if(num3.isDown == true || num4.isDown == true || num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+						checker();
+				}
+		
 			
 		} 
 		else{
@@ -305,6 +345,13 @@ Play.prototype = {
 		//console.log(game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1));
 		//console.log(userInput);
 	}
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // swap elements
+  }
 }
 
 function checker()	{
@@ -353,10 +400,18 @@ function updateCounter() {
 
 //grabs a new code for the mechanic whenever it is compeleted.
 function getNewCode() {
-		num1 = game.rnd.pick(numPadArray);
-		num2 = game.rnd.pick(numPadArray);
-		num3 = game.rnd.pick(numPadArray);
-		num4 = game.rnd.pick(numPadArray);
+		shuffle(numPadArray);
+		num1 = numPadArray[0];
+		num2 = numPadArray[1];
+		num3 = numPadArray[2];
+		num4 = numPadArray[3];
+		num5 = numPadArray[4];
+		num6 = numPadArray[5];
+		num7 = numPadArray[6];
+		num8 = numPadArray[7];
+		num9 = numPadArray[8];
+		num10 = numPadArray[9];
+
 
 		
 		rndbombNum = game.rnd.integerInRange(1000,9999);
@@ -367,10 +422,7 @@ function getNewCode() {
 		keyText3.text = num3.keyCode;
 		keyText4.text = num4.keyCode;
 
-		if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
-		{
-			getNewCode();
-		}
+		
 
 }
 
