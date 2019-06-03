@@ -19,18 +19,19 @@ MainMenu.prototype = {
 	preload: function() {
 		console.log("MainMenu: preload");
 		game.load.image('bomb', 'assets/img/bomb.png');
-		game.load.image('Disarmbackground', 'assets/img/Disarmbackground.png');
+		game.load.image('bombWire', 'assets/img/bombWire.png');
+		game.load.image('Disarmbackground', 'assets/img/DisarmBackground.png');
 		game.load.image('MainMenu01', 'assets/img/MainMenu01.png');
 		game.load.image('MainMenu02', 'assets/img/MainMenu02.png');
 		game.load.image('MainMenu03', 'assets/img/MainMenu03.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
 		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
-		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 128, 128);
-		game.load.spritesheet('civilian02', 'assets/img/civilian02.png', 128, 128);
-		game.load.spritesheet('civilian03', 'assets/img/civilian03.png', 128, 128);
-		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 128, 128);
-		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 128, 128);
-		game.load.spritesheet('officer01', 'assets/img/officer01.png', 128, 128);
+		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 920, 1300);
+		game.load.spritesheet('civilian02', 'assets/img/civilian02.png', 800, 1400);
+		game.load.spritesheet('civilian03', 'assets/img/civilian03.png', 800, 1300);
+		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 0, 1300);
+		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 920, 1300);
+		game.load.spritesheet('officer01', 'assets/img/officer01.png', 5, 1300);
 		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
 		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
@@ -52,9 +53,21 @@ MainMenu.prototype = {
 
 	}
 }
+
+/*var BombCut = function(game){};
+BombCut.prototype = {
+	create: function() {
+		bombWire = game.add.sprite(-200,0, 'bombWire');
+		bombWire.scale.setTo(1,1);
+
+
+	}
+}*/
+
 var menuInstruction;
 var backgroundMusic;
 var bomb;
+var bombWire;
 var click;
 var chopper;
 var van;
@@ -105,10 +118,22 @@ Play.prototype = {
 
 		//create civilian sprite
 		//var civilian01 = game.add.sprite(200, 400, 'civilian01');
-		var civilian02 = game.add.sprite(500,500, 'civilian02');
+		var civilian02 = game.add.sprite(900,300, 'civilian02');
+		civilian02.scale.setTo(.1,.1);
+
+		var civilian03 = game.add.sprite(150,250, 'civilian03');
+		civilian03.scale.setTo(.12,.12);
+
+		/*var civilian04 = game.add.sprite(1000,350, 'civilian04');
+		civilian04.scale.setTo(.12,.12);*/
 
 		//create diffuser sprite
-		var diffuser01 = game.add.sprite(500, 400, 'diffuser01');
+		var diffuser01 = game.add.sprite(game.world.centerX-75, 250, 'diffuser01');
+		diffuser01.scale.setTo(.15,.15);
+
+		//create diffuser sprite
+		//var cop = game.add.sprite(game.world.centerX-75, 250, 'officer01');
+		//cop.scale.setTo(.2,.2);
 
 		//creating chopper sprite atlas
 		chopper = game.add.sprite(0,0, 'chopper', 'Helicopter1');
@@ -121,31 +146,34 @@ Play.prototype = {
 		chopper.animations.add('chopperFly', [0,1], 10, true);
 
 		//creating news van
-		van = game.add.sprite(20,270, 'van', 'NewsVan1');
+		van = game.add.sprite(20,425, 'van', 'NewsVan1');
 		van.scale.setTo(0.20, 0.20);
 
 		//creating the police car.
 		copCar = game.add.sprite(775,425, 'copCar', 'PoliceCar1');
 		copCar.scale.setTo(0.25, 0.25);
-		copCar1 = game.add.sprite(450,425, 'copCar', 'PoliceCar1');
+		copCar1 = game.add.sprite(450,575, 'copCar', 'PoliceCar1');
 		copCar1.scale.setTo(-0.25, 0.25);
 
 
 		//bomb added to the top left.
-		bomb = game.add.sprite(850,0, 'bomb');
+		bomb = game.add.sprite(940,-20, 'bomb');
 
 		//set scale to fit screen
-		bomb.scale.setTo(.3,.3);
+		bomb.scale.setTo(.25,.25);
+
+		//bomb added to the top left.
+		//bombWire = game.add.sprite(560,-100, 'bombWire');
+		//bombWire.scale.setTo(.5,.5);
 
 		//display bombNum UI text.
-		//bombNumText = game.add.text(950,93, '0000', {fontSize: '40px', fill: '#000'});
-		displayNum1 = game.add.text(945,93, '0', {fontSize: '40px', fill: '#000'});
-		displayNum2 = game.add.text(970,93, '0', {fontSize: '40px', fill: '#000'});
-		displayNum3 = game.add.text(995,93, '0', {fontSize: '40px', fill: '#000'});
-		displayNum4 = game.add.text(1020,93, '0', {fontSize: '40px', fill: '#000'});
+		displayNum1 = game.add.text(1020,55, '0', {fontSize: '40px', fill: '#000'});
+		displayNum2 = game.add.text(1040,55, '0', {fontSize: '40px', fill: '#000'});
+		displayNum3 = game.add.text(1060,55, '0', {fontSize: '40px', fill: '#000'});
+		displayNum4 = game.add.text(1080,55, '0', {fontSize: '40px', fill: '#000'});
 
 		//scoretext
-		scoreText = game.add.text(10, 10, '0% Diffused', { fontSize: '32px', fill: '#000' });
+		scoreText = game.add.text(10, 10, '0% PassCode', { fontSize: '32px', fill: '#000' });
 
 		//userInput = game.input.keyboard;
 		keyNum0 = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_0);
@@ -187,8 +215,9 @@ Play.prototype = {
 		*/
 		
 		//text UI for in-game instructions 
-		keyNumInstruct = game.add.text(455, 580, "96 = 0;    101 = 5\n97 = 1;    102 = 6; \n98 = 2;    103 = 7; \n99 = 3;    104 = 8; \n100 = 4;  105 = 9 ", {font: "30px Arial", fill: "#000"});
+		keyNumInstruct = game.add.text(455, 550, "96 = 0;    101 = 5\n97 = 1;    102 = 6; \n\n98 = 2;    103 = 7; \n99 = 3;    104 = 8; \n100 = 4;  105 = 9 ", {font: "30px Arial", fill: "#000"});
 
+		//game.add.text(400,550, "Cut the Red Wire \nConnect the Red Wire to the Green \n\n\nCut the Blue Wire \nConnect Blue to Yellow", {font: "25px Arial", fill: "#000"});
 		//timer implementations
 		var me = this;
 		me.startTime = new Date();
@@ -208,7 +237,7 @@ Play.prototype = {
 
         var me = this;
 
-        me.timeLabel = me.game.add.text(me.game.world.centerX, 10, "00:00", {font: "100px Arial", fill: "#000"}); 
+        me.timeLabel = me.game.add.text(me.game.world.centerX-5, 0, "00:00", {font: "75px Arial", fill: "#000"}); 
         me.timeLabel.anchor.setTo(0.5, 0);
         me.timeLabel.align = 'center';
 
@@ -245,7 +274,6 @@ Play.prototype = {
 
     },
 
-
 	update: function() {
 		//helicopter animation
 		chopper.animations.play('chopperFly');
@@ -277,9 +305,6 @@ Play.prototype = {
 		{
 			check = false;
 		}
-
-
-
 		
 		if(num1.isDown == true){
 			console.log('hit');
