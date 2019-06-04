@@ -229,7 +229,7 @@ Play.prototype = {
 		//timer implementations
 		var me = this;
 		me.startTime = new Date();
-		me.totalTime = 120;
+		me.totalTime = 150;
 		me.timeElapsed = 0;
 		me.createTimer();
 		me.gameTimer = game.time.events.loop(100, function(){
@@ -316,26 +316,26 @@ Play.prototype = {
 		
 		if(num1.isDown == true){
 			console.log('hit');
-			click.play();
-			beep.play();
+			//click.play();
+			//beep.play();
 			displayText(num1, displayNum1);
 			if(num2.isDown == true) {
 				console.log('hit');
-				click.play();
-				beep.play();
+				//click.play();
+				//beep.play();
 				displayText(num2, displayNum2);
 				if(num3.isDown == true) {
 					console.log('hit');
-					click.play();
-					beep.play();
+					//click.play();
+					//beep.play();
 					displayText(num3, displayNum3);
 					if(num4.isDown == true) {
 						console.log('hit');
-						click.play();
+						//click.play();
 						beep.play();
 						displayText(num4, displayNum4);
 						//game.state.start('GameOver');
-						//score += 10;
+						score += 15;
    						scoreText.text = score + '% Diffused';
 
    						//win condition
@@ -410,6 +410,9 @@ function shuffle(array) {
 function checker()	{
 	error.play();
 	score -= 10;
+	game.paused = true;
+	game.paused = false;
+	scoreText.text = score + '% Diffused';
 	getNewCode();
 }
 
@@ -477,7 +480,7 @@ function getNewCode() {
 		keyText3.text = num3.keyCode;
 		keyText4.text = num4.keyCode;
 
-		score += 10;
+		//score += 15;
 
 }
 
