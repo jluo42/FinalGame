@@ -528,9 +528,11 @@ function getNewCode() {
 
 var test, testbomb;
 var speed;
+var bombTray, yellow, red, blue, green;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
 	preload: function() {
+
 	},
 
 	create: function() {
@@ -548,10 +550,36 @@ WireCut.prototype = {
 		this.physics.arcade.enable(testbomb);
 		//testbomb.body.velocity.x = 10;*/
 
-		var bombTray = game.add.sprite(-150,-150,'BombTray');
-		var yellow = game.add.sprite(0,0, 'wires', 'Yellow');
+		//create bombTray Sprite
+		bombTray = game.add.sprite(-150,-150,'BombTray');
+
+		//create yellow wire sprite
+		yellow = game.add.sprite(850,325, 'wires', 'Yellow');
 		yellow.anchor.setTo(0.5,0.5);
-		
+		yellow.inputEnabled = true;
+		yellow.input.enableDrag(true);
+
+		//create red wire sprite
+		red = game.add.sprite(850,420, 'wires', 'Red');
+		red.anchor.setTo(0.5,0.5);
+		red.inputEnabled = true;
+		red.input.enableDrag(true);
+
+		//create blue wire sprite
+		blue = game.add.sprite(850, 450, 'wires', 'Blue');
+		blue.anchor.setTo(0.5,0.5);
+		blue.scale.setTo(-1,1);
+		blue.inputEnabled = true;
+		blue.input.enableDrag(true);
+
+		//create a green wire sprite
+		green = game.add.sprite(850, 350, 'wires', 'Green');
+		green.anchor.setTo(0.5,0.5);
+		green.inputEnabled = true;
+		green.input.enableDrag(true);
+
+
+
 
 	},
 
