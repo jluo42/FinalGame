@@ -18,6 +18,7 @@ var MainMenu = function(game){};
 MainMenu.prototype = {
 	preload: function() {
 		console.log("MainMenu: preload");
+		game.load.image('test', 'assets/img/test.png');
 		game.load.image('bomb', 'assets/img/bomb.png');
 		game.load.image('bombWire', 'assets/img/bombWire.png');
 		game.load.image('Disarmbackground', 'assets/img/DisarmBackground.png');
@@ -30,11 +31,11 @@ MainMenu.prototype = {
 		game.load.audio('error', 'assets/audio/error.mp3');
 		game.load.audio('explosion', 'assets/audio/explosion.mp3');
 		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 920, 1300);
-		game.load.spritesheet('civilian02', 'assets/img/civilian02.png', 800, 1400);
-		game.load.spritesheet('civilian03', 'assets/img/civilian03.png', 800, 1300);
+		game.load.atlas('Beanie', 'assets/img/Beanie.png', 'assets/img/Beanie.json');
+		game.load.atlas('Taylor', 'assets/img/Taylor.png', 'assets/img/Taylor.json');
 		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 0, 1300);
-		game.load.spritesheet('diffuser01', 'assets/img/diffuser01.png', 920, 1300);
-		game.load.spritesheet('officer01', 'assets/img/officer01.png', 5, 1300);
+		game.load.atlas('BombMan', 'assets/img/BombMan.png', 'assets/img/BombMan.json'); // texture atlas
+		game.load.atlas('cop', 'assets/img/Cop.png', 'assets/img/Cop.json');
 		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
 		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
@@ -62,14 +63,13 @@ BombCut.prototype = {
 	create: function() {
 		bombWire = game.add.sprite(-200,0, 'bombWire');
 		bombWire.scale.setTo(1,1);
-
-
 	}
 }*/
 
 var menuInstruction;
 var backgroundMusic;
 var bomb;
+var bombMan, taylor, beanie, cop;
 var bombWire;
 var click;
 var chopper;
@@ -124,22 +124,26 @@ Play.prototype = {
 
 		//create civilian sprite
 		//var civilian01 = game.add.sprite(200, 400, 'civilian01');
-		var civilian02 = game.add.sprite(900,300, 'civilian02');
-		civilian02.scale.setTo(.1,.1);
+		beanie = game.add.sprite(900,300, 'Beanie', 'sprite1');
+		beanie.scale.setTo(.12,.12);
+		beanie.animations.add('beanieCry', [0,1,2], 5, true);
 
-		var civilian03 = game.add.sprite(150,250, 'civilian03');
-		civilian03.scale.setTo(.12,.12);
+		taylor = game.add.sprite(150,300, 'Taylor', 'sprite2');
+		taylor.scale.setTo(.12,.12);
+		taylor.animations.add('cry', [0,1,2], 5, true);
 
 		/*var civilian04 = game.add.sprite(1000,350, 'civilian04');
 		civilian04.scale.setTo(.12,.12);*/
 
 		//create diffuser sprite
-		var diffuser01 = game.add.sprite(game.world.centerX-75, 250, 'diffuser01');
-		diffuser01.scale.setTo(.15,.15);
+		bombMan = game.add.sprite(game.world.centerX-75, 250, 'BombMan', 'sprite2');
+		bombMan.scale.setTo(.15,.15);
+		bombMan.animations.add('sweat', [1,2,3], 10, true);
 
 		//create diffuser sprite
-		//var cop = game.add.sprite(game.world.centerX-75, 250, 'officer01');
-		//cop.scale.setTo(.2,.2);
+		cop = game.add.sprite(game.world.centerX-300, 300, 'cop', 'sprite1');
+		cop.scale.setTo(.25,.25);
+		cop.animations.add('donut', [0,1,2,3], 5, true);
 
 		//creating chopper sprite atlas
 		chopper = game.add.sprite(0,0, 'chopper', 'Helicopter1');
@@ -158,15 +162,23 @@ Play.prototype = {
 		//creating the police car.
 		copCar = game.add.sprite(775,425, 'copCar', 'PoliceCar1');
 		copCar.scale.setTo(0.25, 0.25);
-		copCar1 = game.add.sprite(450,575, 'copCar', 'PoliceCar1');
+		
+		copCar1 = game.add.sprite(-100,575, 'copCar', 'PoliceCar1');
 		copCar1.scale.setTo(-0.25, 0.25);
+		game.physics.arcade.enable(copCar1);
+		copCar1.body.velocity.x = 250;
+		copCar1.animations.add('copDrive', [0,1,2], 10, true);
 
 
 		//bomb added to the top left.
 		bomb = game.add.sprite(940,-20, 'bomb');
-
 		//set scale to fit screen
 		bomb.scale.setTo(.25,.25);
+
+		bomb.inputEnabled = true;
+		bomb.input.enableDrag(true);
+		game.physics.arcade.enable(bomb);
+		bomb.enableBody = true;
 
 		//bomb added to the top left.
 		//bombWire = game.add.sprite(560,-100, 'bombWire');
@@ -288,11 +300,26 @@ Play.prototype = {
     },
 
 	update: function() {
+
+		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+      		game.state.start('WireCut');
+		}
 		//helicopter animation
 		chopper.animations.play('chopperFly');
-
+		//copCar animations
+		copCar1.animations.play('copDrive');
+		//play the bombman sweat animations
+		bombMan.animations.play('sweat');
+		//play taylor cry animations
+		taylor.animations.play('cry');
+		//play beanie animations
+		beanie.animations.play('beanieCry');
+		//play cop animations
+		cop.animations.play('donut');
 		//wraps the helicopter around the map
 		game.world.wrap(chopper, 0, true);
+		//wraps the cop car
+		game.world.wrap(copCar1, 0 , true);
 		
 		/*if(total == 1)
 		{
@@ -489,14 +516,54 @@ function getNewCode() {
 
 }
 
-var GameOver = function(game) {};
-GameOver.prototype = {
+var test, testbomb;
+var speed;
+var WireCut = function(game) {};
+WireCut.prototype = {
 	preload: function() {
 
 	},
 
 	create: function() {
-		menuText = game.add.text(300, 400, 'YOU HAVE DIED!!! Press Spacebar to play again', { fontSize: '32px', fill: '#000' });
+		this.physics.startSystem(Phaser.Physics.ARCADE);
+
+		test = game.add.image(150,150, 'test');
+		test.anchor.setTo(0.5,0.5);
+		test.inputEnabled = true;
+		test.input.enableDrag(true);
+
+		this.physics.arcade.enable(test);
+		this.physics.arcade.gravity.y = 1000;
+		this.physics.arcade.enable(test);
+	
+
+		testbomb = game.add.image(250,250, 'bomb');
+		testbomb.scale.setTo(.15,.15);
+		this.physics.arcade.enable(testbomb);
+		//testbomb.body.velocity = 10;
+	},
+
+	update: function() {
+		//this.physics.arcade.enable(test);
+		var overlap = game.physics.arcade.collide(test, testbomb);
+		//console.log(overlap);
+		//test.body.velocity.x = 0;
+		//test.body.velocity.x = -110;
+
+		
+	}
+}
+
+var GameOver = function(game) {};
+GameOver.prototype = {
+	preload: function() {
+		game.load.image('GameOverScreen', 'assets/img/GameOverScreen.png')
+	},
+
+	create: function() {
+		game.add.image(0,0, 'GameOverScreen');
+		menuText = game.add.text(200, 750, 'YOU HAVE DIED!!! Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
+
 	},
 
 	update: function() {
@@ -509,11 +576,12 @@ GameOver.prototype = {
 var GameWin = function(game) {};
 GameWin.prototype = {
 	preload: function(){
-
+		game.load.image('WinScreen', 'assets/img/WinScreen.png');
 	},
 
 	create: function(){
-		menuText = game.add.text(300, 400, 'You have defused the bomb!!! Press Spacebar to play again', { fontSize: '32px', fill: '#000' });
+		game.add.image(0,0, 'WinScreen');
+		menuText = game.add.text(10, 720, 'You have defused the bomb!!!                             Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
 	},
 
 	update: function(){
@@ -526,6 +594,7 @@ GameWin.prototype = {
 //Game States
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
+game.state.add('WireCut', WireCut);
 game.state.add('GameOver', GameOver);
 game.state.add('GameWin', GameWin);
 game.state.start('MainMenu');
