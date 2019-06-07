@@ -20,6 +20,7 @@ MainMenu.prototype = {
 		console.log("MainMenu: preload");
 		game.load.image('test', 'assets/img/test.png');
 		game.load.image('bomb', 'assets/img/bomb.png');
+		game.load.image('BombTray', 'assets/img/BombTray.png');
 		game.load.image('bombWire', 'assets/img/bombWire.png');
 		game.load.image('Disarmbackground', 'assets/img/DisarmBackground.png');
 		game.load.image('MainMenu01', 'assets/img/MainMenu01.png');
@@ -30,15 +31,16 @@ MainMenu.prototype = {
 		game.load.audio('beep', 'assets/audio/beep.mp3');
 		game.load.audio('error', 'assets/audio/error.mp3');
 		game.load.audio('explosion', 'assets/audio/explosion.mp3');
-		game.load.spritesheet('civilian01', 'assets/img/civilian01.png', 920, 1300);
+		game.load.atlas('bob', 'assets/img/Bob.png', 'assets/img/Bob.json'); 
 		game.load.atlas('Beanie', 'assets/img/Beanie.png', 'assets/img/Beanie.json');
 		game.load.atlas('Taylor', 'assets/img/Taylor.png', 'assets/img/Taylor.json');
-		game.load.spritesheet('civilian04', 'assets/img/civilian04.png', 0, 1300);
-		game.load.atlas('BombMan', 'assets/img/BombMan.png', 'assets/img/BombMan.json'); // texture atlas
+		game.load.atlas('buffy', 'assets/img/Buffy.png', 'assets/img/Buffy.json');
+		game.load.atlas('BombMan', 'assets/img/BombMan.png', 'assets/img/BombMan.json'); 
 		game.load.atlas('cop', 'assets/img/Cop.png', 'assets/img/Cop.json');
 		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
 		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
+		game.load.atlas('wires', 'assets/img/Wires.png', 'assets/img/Wires.json');
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -69,8 +71,8 @@ BombCut.prototype = {
 var menuInstruction;
 var backgroundMusic;
 var bomb;
-var bombMan, taylor, beanie, cop;
-var bombWire;
+var bombMan, taylor, beanie, cop, bob, buffy;
+var bombWire, wires;
 var click;
 var chopper;
 var van;
@@ -116,18 +118,19 @@ Play.prototype = {
 	create: function() {
 		//enabling physics for the game
 		game.physics.startSystem(Phaser.Physics.ARCADE);
+		
 		//create background
 		var Disarmbackground = game.add.sprite(0,0,'Disarmbackground');
 		Disarmbackground.height = game.height;
 		Disarmbackground.width = game.width;
 
 
-		//create civilian sprite
-		//var civilian01 = game.add.sprite(200, 400, 'civilian01');
+		//create beanie sprite and animations
 		beanie = game.add.sprite(900,300, 'Beanie', 'sprite1');
 		beanie.scale.setTo(.12,.12);
 		beanie.animations.add('beanieCry', [0,1,2], 5, true);
 
+		//create taylor sprite and animations
 		taylor = game.add.sprite(150,300, 'Taylor', 'sprite2');
 		taylor.scale.setTo(.12,.12);
 		taylor.animations.add('cry', [0,1,2], 5, true);
@@ -135,15 +138,19 @@ Play.prototype = {
 		/*var civilian04 = game.add.sprite(1000,350, 'civilian04');
 		civilian04.scale.setTo(.12,.12);*/
 
-		//create diffuser sprite
-		bombMan = game.add.sprite(game.world.centerX-75, 250, 'BombMan', 'sprite2');
+		//create diffuser sprite and animations
+		bombMan = game.add.sprite(game.world.centerX-50, 250, 'BombMan', 'sprite2');
 		bombMan.scale.setTo(.15,.15);
 		bombMan.animations.add('sweat', [1,2,3], 10, true);
 
-		//create diffuser sprite
+		//create cop sprite and animations
 		cop = game.add.sprite(game.world.centerX-300, 300, 'cop', 'sprite1');
 		cop.scale.setTo(.25,.25);
 		cop.animations.add('donut', [0,1,2,3], 5, true);
+
+		//create bob sprite and animations
+		bob = game.add.sprite(1000,330, 'bob', 'sprite1');
+		bob.animations.add('panic', [0,1,2,3], 5, true);
 
 		//creating chopper sprite atlas
 		chopper = game.add.sprite(0,0, 'chopper', 'Helicopter1');
@@ -316,6 +323,9 @@ Play.prototype = {
 		beanie.animations.play('beanieCry');
 		//play cop animations
 		cop.animations.play('donut');
+		//play office worker animations
+		bob.animations.play('panic');
+
 		//wraps the helicopter around the map
 		game.world.wrap(chopper, 0, true);
 		//wraps the cop car
@@ -518,14 +528,13 @@ function getNewCode() {
 
 var test, testbomb;
 var speed;
-var WireCut = function(game) {};
+var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
 	preload: function() {
-
 	},
 
 	create: function() {
-		this.physics.startSystem(Phaser.Physics.ARCADE);
+		/*this.physics.startSystem(Phaser.Physics.ARCADE);
 
 		test = game.add.image(150,150, 'test');
 		test.anchor.setTo(0.5,0.5);
@@ -533,19 +542,22 @@ WireCut.prototype = {
 		test.input.enableDrag(true);
 
 		this.physics.arcade.enable(test);
-		this.physics.arcade.gravity.y = 1000;
-		this.physics.arcade.enable(test);
 	
-
 		testbomb = game.add.image(250,250, 'bomb');
 		testbomb.scale.setTo(.15,.15);
 		this.physics.arcade.enable(testbomb);
-		//testbomb.body.velocity = 10;
+		//testbomb.body.velocity.x = 10;*/
+
+		var bombTray = game.add.sprite(-150,-150,'BombTray');
+		var yellow = game.add.sprite(0,0, 'wires', 'Yellow');
+		yellow.anchor.setTo(0.5,0.5);
+		
+
 	},
 
 	update: function() {
 		//this.physics.arcade.enable(test);
-		var overlap = game.physics.arcade.collide(test, testbomb);
+		//var overlap = game.physics.arcade.collide(test, testbomb);
 		//console.log(overlap);
 		//test.body.velocity.x = 0;
 		//test.body.velocity.x = -110;
@@ -563,7 +575,7 @@ GameOver.prototype = {
 	create: function() {
 		game.add.image(0,0, 'GameOverScreen');
 		menuText = game.add.text(200, 750, 'YOU HAVE DIED!!! Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
-
+			
 	},
 
 	update: function() {
