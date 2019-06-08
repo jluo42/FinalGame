@@ -563,14 +563,14 @@ WireCut.prototype = {
 		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
 		yellow.inputEnabled = true;
-		yellow.events.onInputDown.add(this.WireListener, {'check1': 1}, this);
-		
+		yellow.events.onInputDown.add(WireListener, {'check1': 1}, this);
+
 		//yellow.input.enableDrag(true);
 		//create red wire sprite
-		red = game.add.sprite(850,420, 'wires', 'Red');
+		red = game.add.sprite(850,720, 'wires', 'Red');
 		red.anchor.setTo(0.5,0.5);
 		red.inputEnabled = true;
-		red.events.onInputDown.add(this.WireListener, {'check2': 2}, this);
+		red.events.onInputDown.add(WireListener, {'check1': 2}, this);
 		//red.input.enableDrag(true);
 
 		//create blue wire sprite
@@ -606,8 +606,11 @@ WireCut.prototype = {
 		
 	},
 
-	WireListener: function() {
-	check = this.check1
+
+}
+	function WireListener() {
+	check = this.check1;
+	console.log("this is check " + check);
 	if(check == 1) {
 		yellow.destroy();
 		console.log(check1);
@@ -621,7 +624,7 @@ WireCut.prototype = {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
-		check++;
+		//check++;
 	}
 
 	if(check == 2) {
@@ -633,8 +636,6 @@ WireCut.prototype = {
 		redLeft.input.enableDrag(true);
 	}
 }
-}
-
 
 
 var GameOver = function(game) {};
