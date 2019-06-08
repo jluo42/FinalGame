@@ -24,10 +24,9 @@ MainMenu.prototype = {
 		game.load.image('bombWire', 'assets/img/bombWire.png');
 		game.load.image('Disarmbackground', 'assets/img/DisarmBackground.png');
 		game.load.image('MainMenu01', 'assets/img/MainMenu01.png');
-		game.load.image('MainMenu02', 'assets/img/MainMenu02.png');
-		game.load.image('MainMenu03', 'assets/img/MainMenu03.png');
+		game.load.image('UIColor', 'assets/img/UIColorChart.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
-		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
+		//game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.audio('beep', 'assets/audio/beep.mp3');
 		game.load.audio('error', 'assets/audio/error.mp3');
 		game.load.audio('explosion', 'assets/audio/explosion.mp3');
@@ -124,7 +123,6 @@ Play.prototype = {
 		Disarmbackground.height = game.height;
 		Disarmbackground.width = game.width;
 
-
 		//create beanie sprite and animations
 		beanie = game.add.sprite(900,300, 'Beanie', 'sprite1');
 		beanie.scale.setTo(.12,.12);
@@ -186,6 +184,11 @@ Play.prototype = {
 		bomb.input.enableDrag(true);
 		game.physics.arcade.enable(bomb);
 		bomb.enableBody = true;
+
+		//create UI color chart
+		var color = game.add.sprite(0,50, 'UIColor');
+		color.scale.setTo(.35,.3);
+
 
 		//bomb added to the top left.
 		//bombWire = game.add.sprite(560,-100, 'bombWire');
@@ -529,6 +532,8 @@ function getNewCode() {
 var test, testbomb;
 var speed;
 var bombTray, yellow, red, blue, green;
+var check, check1, check2;
+var connect = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
 	preload: function() {
@@ -555,28 +560,36 @@ WireCut.prototype = {
 
 		//create yellow wire sprite
 		yellow = game.add.sprite(850,325, 'wires', 'Yellow');
+		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
 		yellow.inputEnabled = true;
-		yellow.input.enableDrag(true);
-
+		yellow.events.onInputDown.add(this.WireListener, {'check1': 1}, this);
+		
+		//yellow.input.enableDrag(true);
 		//create red wire sprite
 		red = game.add.sprite(850,420, 'wires', 'Red');
 		red.anchor.setTo(0.5,0.5);
 		red.inputEnabled = true;
-		red.input.enableDrag(true);
+		red.events.onInputDown.add(this.WireListener, {'check2': 2}, this);
+		//red.input.enableDrag(true);
 
 		//create blue wire sprite
 		blue = game.add.sprite(850, 450, 'wires', 'Blue');
+		var check3 = 3;
 		blue.anchor.setTo(0.5,0.5);
 		blue.scale.setTo(-1,1);
 		blue.inputEnabled = true;
-		blue.input.enableDrag(true);
+		//blue.events.onInputDown.add(WireListener, check3, this);
+		
+		//blue.input.enableDrag(true);
 
 		//create a green wire sprite
 		green = game.add.sprite(850, 350, 'wires', 'Green');
+		var check4 = 4;
 		green.anchor.setTo(0.5,0.5);
 		green.inputEnabled = true;
-		green.input.enableDrag(true);
+		//green.events.onInputDown.add(WireListener, check4, this);
+		//green.input.enableDrag(true);
 
 
 
@@ -591,8 +604,38 @@ WireCut.prototype = {
 		//test.body.velocity.x = -110;
 
 		
+	},
+
+	WireListener: function() {
+	check = this.check1
+	if(check == 1) {
+		yellow.destroy();
+		console.log(check1);
+		//spawn left cut yellow wire
+		var yellowLeft = game.add.sprite(710,250, 'wires', 'Yellow(L)');
+		yellowLeft.anchor.setTo(0.5,0.5);
+		yellowLeft.inputEnabled = true;
+		yellowLeft.input.enableDrag(true);
+		//spawn right cut yellow wire
+		var yellowRight = game.add.sprite(980, 350, 'wires', 'Yellow(R)');
+		yellowRight.anchor.setTo(0.5,0.5);
+		yellowRight.inputEnabled = true;
+		yellowRight.input.enableDrag(true);
+		check++;
+	}
+
+	if(check == 2) {
+		//console.log(check2);
+		red.destroy();
+		var redLeft = game.add.sprite(710, 350, 'wires', 'Red(L)');
+		redLeft.anchor.setTo(0.5,0.5);
+		redLeft.inputEnabled = true;
+		redLeft.input.enableDrag(true);
 	}
 }
+}
+
+
 
 var GameOver = function(game) {};
 GameOver.prototype = {
