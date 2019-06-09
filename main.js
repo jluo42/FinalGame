@@ -230,10 +230,10 @@ Play.prototype = {
 		num10 = numPadArray[9];
 
 		//creating the text with keyCodes
-		keyText1 = game.add.text(400, 500, num1.keyCode, {font: "38px Arial", fill: "#000"}); 
-		keyText2 = game.add.text(500, 500, num2.keyCode, {font: "38px Arial", fill: "#000"}); 
-		keyText3 = game.add.text(600, 500, num3.keyCode, {font: "38px Arial", fill: "#000"}); 
-		keyText4 = game.add.text(700, 500, num4.keyCode, {font: "38px Arial", fill: "#000"}); 
+		keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
+		keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
+		keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
+		keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 
 		//checks for repeating numbers on the sequence. If so, get a new code.
 		/*if (num1 == num2 || num1 == num3 || num1 == num4 || num2 == num3 || num2 == num4 || num3 == num4)
@@ -248,7 +248,7 @@ Play.prototype = {
 		explosion = game.add.audio('explosion');
 		
 		//text UI for in-game instructions 
-		keyNumInstruct = game.add.text(455, 550, "96 = 0;    101 = 5\n97 = 1;    102 = 6; \n\n98 = 2;    103 = 7; \n99 = 3;    104 = 8; \n100 = 4;  105 = 9 ", {font: "30px Arial", fill: "#000"});
+		keyNumInstruct = game.add.text(48, 725, "0      1      2      3       4       5       6      7       8      9", {font: "50px Arial", fill: "#000"});
 
 		//game.add.text(400,550, "Cut the Red Wire \nConnect the Red Wire to the Green \n\n\nCut the Blue Wire \nConnect Blue to Yellow", {font: "25px Arial", fill: "#000"});
 		//timer implementations
@@ -532,7 +532,8 @@ function getNewCode() {
 var test, testbomb;
 var speed;
 var bombTray, yellow, red, blue, green;
-var check, check1, check2;
+var cutWireArray, cut1, cut2, cut3, cut4;
+var check, wirecheck1, wirecheck2, wirecheck3, wirecheck4;
 var connect = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
@@ -562,8 +563,8 @@ WireCut.prototype = {
 		yellow = game.add.sprite(850,325, 'wires', 'Yellow');
 		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
-		yellow.inputEnabled = true;
-		yellow.events.onInputDown.add(WireListener, {'check1': 1}, this);
+		//yellow.inputEnabled = true;
+		//yellow.events.onInputDown.add(WireListener, {'check1': 1}, this);
 
 		//yellow.input.enableDrag(true);
 		//create red wire sprite
@@ -591,9 +592,88 @@ WireCut.prototype = {
 		//green.events.onInputDown.add(WireListener, check4, this);
 		//green.input.enableDrag(true);
 
+		//add the wires to the array and mix them around
+		cutWireArray = [yellow, red, blue, green];
+		shuffle(cutWireArray);
 
+		//assign random cut instructions
+		cut1 = cutWireArray[0];
+		cut2 = cutWireArray[1];
+		cut3 = cutWireArray[2];
+		cut4 = cutWireArray[3];
 
+		//enable the cut to the given wire
+		if(cut1 == yellow) {
+			console.log('hit yellow');
+			yellow.inputEnabled = true;
+			yellow.events.onInputDown.add(WireListener, {'check1': 1}, this);
+		} else if(cut1 == red) {
+			console.log('hit red');
+			red.inputEnabled = true;
+			red.events.onInputDown.add(WireListener, {'check1': 2}, this);
+		} else if(cut1 == blue) {
+			console.log('hit blue');
+			blue.inputEnabled = true;
+			blue.events.onInputDown.add(WireListener, {'check1': 3}, this);
+		} else if(cut1 == green) {
+			console.log('hit green');
+			green.inputEnabled = true;
+			green.events.onInputDown.add(WireListener, {'check1': 4}, this);
+		}
 
+		if(cut2 == yellow) {
+			console.log('hit yellow' + cut2.obj);
+			yellow.inputEnabled = true;
+			yellow.events.onInputDown.add(WireListener, {'check2': 1}, this);
+		} else if(cut2 == red) {
+			console.log('hit red');
+			red.inputEnabled = true;
+			red.events.onInputDown.add(WireListener, {'check2': 2}, this);
+		} else if(cut2 == blue) {
+			console.log('hit blue');
+			blue.inputEnabled = true;
+			blue.events.onInputDown.add(WireListener, {'check2': 3}, this);
+		} else if(cut2 == green) {
+			console.log('hit green');
+			green.inputEnabled = true;
+			green.events.onInputDown.add(WireListener, {'check2': 4}, this);
+		}
+
+		if(cut3 == yellow) {
+			console.log('hit yellow');
+			yellow.inputEnabled = true;
+			yellow.events.onInputDown.add(WireListener, {'check3': 1}, this);
+		} else if(cut3 == red) {
+			console.log('hit red');
+			red.inputEnabled = true;
+			red.events.onInputDown.add(WireListener, {'check3': 2}, this);
+		} else if(cut3 == blue) {
+			console.log('hit blue');
+			blue.inputEnabled = true;
+			blue.events.onInputDown.add(WireListener, {'check3': 3}, this);
+		} else if(cut3 == green) {
+			console.log('hit green');
+			green.inputEnabled = true;
+			green.events.onInputDown.add(WireListener, {'check3': 4}, this);
+		}
+
+		if(cut4 == yellow) {
+			console.log('hit yellow');
+			yellow.inputEnabled = true;
+			yellow.events.onInputDown.add(WireListener, {'check4': 1}, this);
+		} else if(cut4 == red) {
+			console.log('hit red');
+			red.inputEnabled = true;
+			red.events.onInputDown.add(WireListener, {'check4': 2}, this);
+		} else if(cut4 == blue) {
+			console.log('hit blue');
+			blue.inputEnabled = true;
+			blue.events.onInputDown.add(WireListener, {'check4': 3}, this);
+		} else if(cut4 == green) {
+			console.log('hit green');
+			green.inputEnabled = true;
+			green.events.onInputDown.add(WireListener, {'check4': 4}, this);
+		}
 	},
 
 	update: function() {
@@ -608,12 +688,17 @@ WireCut.prototype = {
 
 
 }
-	function WireListener() {
-	check = this.check1;
-	console.log("this is check " + check);
-	if(check == 1) {
+function WireListener() {		
+	wirecheck1 = this.check1;
+	wirecheck2 = this.check2;
+	wirecheck3 = this.check3;
+	wirecheck4 = this.check4;
+
+	//console.log("this is check " + check);
+	if(wirecheck1 == 1) {
+		console.log("this is  yellow check ");
+		game.debug.body(yellow);
 		yellow.destroy();
-		console.log(check1);
 		//spawn left cut yellow wire
 		var yellowLeft = game.add.sprite(710,250, 'wires', 'Yellow(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
@@ -624,16 +709,23 @@ WireCut.prototype = {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
-		//check++;
+		wirecheck1++;
 	}
 
-	if(check == 2) {
-		//console.log(check2);
+	if(wirecheck2 == 2) {
+		console.log("this is  red check ");
+		game.debug.body(red);
 		red.destroy();
 		var redLeft = game.add.sprite(710, 350, 'wires', 'Red(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
+
+		var redRight = game.add.sprite(980, 400, 'wires', 'Red(R)');
+		redRight.anchor.setTo(0.5,0.5);
+		redRight.inputEnabled = true;
+		redRight.input.enableDrag(true);
+		wirecheck2++;
 	}
 }
 
