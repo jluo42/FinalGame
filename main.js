@@ -100,24 +100,15 @@ var error;
 var explosion;
 var green;
 var greencheck;
-//var red;
-//var redcheck;
-//var gray;
-//var graycheck;
-//var pink;
-//var pinkcheck;
-//var yellow;
-//var yellowcheck;
-//var white;
-//var whitecheck;
-//var blue;
-//var bluecheck;
-//var brown;
-//var browncheck;
-//var purple;
-//var purplecheck;
-//var orange;
-//var orangecheck;
+var redcheck;
+var graycheck;
+var pinkcheck;
+var yellowcheck;
+var whitecheck;
+var bluecheck;
+var browncheck;
+var purplecheck;
+var orangecheck;
 
 var Play = function(game) {};
 Play.prototype = {
@@ -394,7 +385,7 @@ Play.prototype = {
 		//Green
 		if (numPadArray[0] == keyNum3 && greencheck == true)
 		{
-			green = game.add.sprite(312,630,'green');
+			green = game.add.sprite(312,630,'green','green');
 			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			greencheck = false;
@@ -402,7 +393,7 @@ Play.prototype = {
 
 		if (numPadArray[1] == keyNum3 && greencheck == true)
 		{
-			green = game.add.sprite(492,630,'green');
+			green = game.add.sprite(492,630,'green','green');
 			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			greencheck = false;
@@ -410,7 +401,7 @@ Play.prototype = {
 
 		if (numPadArray[2] == keyNum3 && greencheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
+			green = game.add.sprite(672,630,'green','green');
 			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			greencheck = false;
@@ -418,276 +409,278 @@ Play.prototype = {
 
 		if (numPadArray[3] == keyNum3 && greencheck == true)
 		{
-			green = game.add.sprite(852,630,'green');
+			green = game.add.sprite(852,630,'green', 'green');
 			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			greencheck = false;
 		}
 
-		/*
+		
 			//Red
 		if (numPadArray[0] == keyNum0 && redcheck == true)
 		{
-			red = game.add.sprite(312,630,'red');
-			red.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green', 'red');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
 		if (numPadArray[1] == keyNum0 && redcheck == true)
 		{
-			red = game.add.sprite(492,630,'red');
-			red.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'red');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
 		if (numPadArray[2] == keyNum0 && redcheck == true)
 		{
-			green = game.add.sprite(672,630,'red');
-			red.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'red');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
-		if (numPadArray[3] == keyNum0 && redcheck == true)
+		if (numPadArray[3] == keyNum0 && redcheck == true)	
 		{
-			red = game.add.sprite(852,630,'red');
-			red.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green', 'red');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
+		
 			//Gray
 		if (numPadArray[0] == keyNum8 && graycheck == true)
 		{
-			gray = game.add.sprite(312,630,'gray');
-			gray.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green','gray');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
 		if (numPadArray[1] == keyNum8 && graycheck == true)
 		{
-			gray = game.add.sprite(492,630,'gray');
-			gray.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'gray');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
 		if (numPadArray[2] == keyNum8 && graycheck == true)
 		{
-			green = game.add.sprite(672,630,'gray');
-			gray.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'gray');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
 		if (numPadArray[3] == keyNum8 && graycheck == true)
 		{
-			gray = game.add.sprite(852,630,'gray');
-			gray.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green', 'gray');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
 			//Pink
 			if (numPadArray[0] == keyNum6 && pinkcheck == true)
 		{
-			pink = game.add.sprite(312,630,'pink');
-			pink.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green', 'pink');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
 		if (numPadArray[1] == keyNum6 && pinkcheck == true)
 		{
-			pink = game.add.sprite(492,630,'pink');
-			pink.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'pink');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
 		if (numPadArray[2] == keyNum6 && pinkcheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			pink.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'pink');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
 		if (numPadArray[3] == keyNum6 && pinkcheck == true)
-		
-			pink = game.add.sprite(852,630,'green');
-			pink.scale.setTo(.35,.3);
+		{
+			green = game.add.sprite(852,630,'green', 'pink');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
+
+		
 		//Yellow
 		if (numPadArray[0] == keyNum2 && yellowcheck == true)
 		{
-			yellow = game.add.sprite(312,630,'yellow');
-			yellow.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green','yellow');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
 		if (numPadArray[1] == keyNum2 && yellowcheck == true)
 		{
-			yellow = game.add.sprite(492,630,'yellow');
-			yellow.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'yellow');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
 		if (numPadArray[2] == keyNum2 && yellowcheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			yellow.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'yellow');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
 		if (numPadArray[3] == keyNum2 && yellowcheck == true)
 		{
-			yellow = game.add.sprite(852,630,'green');
-			yellow.scale.setTo(.35,.3);
+			green= game.add.sprite(852,630,'green', 'yellow');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
 		//white
 		if (numPadArray[0] == keyNum9 && whitecheck == true)
 		{
-			white = game.add.sprite(312,630,'white');
-			white.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green', 'white');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
 		if (numPadArray[1] == keyNum9 && whitecheck == true)
 		{
-			white = game.add.sprite(492,630,'white');
-			white.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green','white');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
 		if (numPadArray[2] == keyNum9 && whitecheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			white.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'white');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
 		if (numPadArray[3] == keyNum9 && whitecheck == true)
 		{
-			white = game.add.sprite(852,630,'green');
-			white.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green', 'white');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
+		
 		//blue
 		if (numPadArray[0] == keyNum4 && bluecheck == true)
 		{
-			blue = game.add.sprite(312,630,'blue');
-			blue.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green','blue');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
 		if (numPadArray[1] == keyNum4 && bluecheck == true)
 		{
-			blue = game.add.sprite(492,630,'blue');
-			blue.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'blue');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
 		if (numPadArray[2] == keyNum4 && bluecheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			blue.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green','blue');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
 		if (numPadArray[3] == keyNum4 && bluecheck == true)
 		{
-			blue = game.add.sprite(852,630,'green');
-			blue.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green', 'blue');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
 		//brown
 		if (numPadArray[0] == keyNum7 && browncheck == true)
 		{
-			brown = game.add.sprite(312,630,'brown');
-			brown.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green','brown');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
 		if (numPadArray[1] == keyNum7 && browncheck == true)
 		{
-			brown = game.add.sprite(492,630,'brown');
-			brown.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'brown');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
 		if (numPadArray[2] == keyNum7 && browncheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			brown.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'brown');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
 		if (numPadArray[3] == keyNum7 && browncheck == true)
 		{
-			brown = game.add.sprite(852,630,'green');
-			brown.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green', 'brown');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
 		//purple
 		if (numPadArray[0] == keyNum5 && purplecheck == true)
 		{
-			purple = game.add.sprite(312,630,'purple');
-			purple.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green', 'purple');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
 		if (numPadArray[1] == keyNum5 && purplecheck == true)
 		{
-			purple = game.add.sprite(492,630,'purple');
-			purple.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green', 'purple');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
 		if (numPadArray[2] == keyNum5 && purplecheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			purple.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green','purple');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
 		if (numPadArray[3] == keyNum5 && purplecheck == true)
 		{
-			purple = game.add.sprite(852,630,'green');
-			purple.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green','purple');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
 		//orange
 			if (numPadArray[0] == keyNum1 && orangecheck == true)
 		{
-			orange = game.add.sprite(312,630,'orange');
-			orange.scale.setTo(.35,.3);
+			green = game.add.sprite(312,630,'green', 'orange');
+			green.scale.setTo(.35,.3);
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
 		if (numPadArray[1] == keyNum1 && orangecheck == true)
 		{
-			orange = game.add.sprite(492,630,'orange');
-			orange.scale.setTo(.35,.3);
+			green = game.add.sprite(492,630,'green','orange');
+			green.scale.setTo(.35,.3);
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
 		if (numPadArray[2] == keyNum1 && orangecheck == true)
 		{
-			green = game.add.sprite(672,630,'green');
-			orange.scale.setTo(.35,.3);
+			green = game.add.sprite(672,630,'green', 'orange');
+			green.scale.setTo(.35,.3);
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
 		if (numPadArray[3] == keyNum1 && orangecheck == true)
 		{
-			orange = game.add.sprite(852,630,'green');
-			orange.scale.setTo(.35,.3);
+			green = game.add.sprite(852,630,'green' ,'orange');
+			green.scale.setTo(.35,.3);
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
-		*/
-
 		//key presses for the mechanic of the game.
 		
 
@@ -860,15 +853,15 @@ function getNewCode() {
 		num10 = numPadArray[9];
 
 		greencheck = true;
-		//redcheck = true;
-		//graycheck = true;
-		//pinkcheck = true;
-		//yellowcheck = true;
-		//whitecheck = true;
-		//bluebheck = true;
-		//browncheck = true;
-		//purplecheck = true;
-		//orangecheck = true;
+		redcheck = true;
+		graycheck = true;
+		pinkcheck = true;
+		yellowcheck = true;
+		whitecheck = true;
+		bluecheck = true;
+		browncheck = true;
+		purplecheck = true;
+		orangecheck = true;
 
 		
 		rndbombNum = game.rnd.integerInRange(1000,9999);
