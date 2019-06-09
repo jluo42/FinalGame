@@ -242,15 +242,15 @@ Play.prototype = {
 		num10 = numPadArray[9];
 
 		greencheck = true;
-		//redcheck = true;
-		//graycheck = true;
-		//pinkcheck = true
-		//yellowcheck = true;
-		//whitecheck = true;
-		//bluecheck = true;
-		//browncheck = true;
-		//purplecheck = true;
-		//orangecheck = true;
+		redcheck = true;
+		graycheck = true;
+		pinkcheck = true
+		yellowcheck = true;
+		whitecheck = true;
+		bluecheck = true;
+		browncheck = true;
+		purplecheck = true;
+		orangecheck = true;
 
 
 		/*
