@@ -17,8 +17,6 @@ var scoreText;
 var MainMenu = function(game){};
 MainMenu.prototype = {
 	preload: function() {
-		console.log("MainMenu: preload");
-		game.load.image('test', 'assets/img/test.png');
 		game.load.image('bomb', 'assets/img/bomb.png');
 		game.load.image('BombTray', 'assets/img/BombTray.png');
 		game.load.image('bombWire', 'assets/img/bombWire.png');
@@ -36,7 +34,7 @@ MainMenu.prototype = {
 		game.load.atlas('buffy', 'assets/img/Buffy.png', 'assets/img/Buffy.json');
 		game.load.atlas('BombMan', 'assets/img/BombMan.png', 'assets/img/BombMan.json'); 
 		game.load.atlas('cop', 'assets/img/Cop.png', 'assets/img/Cop.json');
-		game.load.atlas('chopper', 'assets/img/Chopperspritesheet.png', 'assets/img/Choppersprites.json');
+		game.load.atlas('chopper', 'assets/img/Chopper.png', 'assets/img/Chopper.json');
 		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
 		game.load.atlas('wires', 'assets/img/Wires.png', 'assets/img/Wires.json');
@@ -174,14 +172,14 @@ Play.prototype = {
 		bob.animations.add('panic', [0,1,2,3], 5, true);
 
 		//creating chopper sprite atlas
-		chopper = game.add.sprite(0,0, 'chopper', 'Helicopter1');
-		chopper.scale.setTo(0.08,0.08);
+		chopper = game.add.sprite(0,0, 'chopper', 'Chopper1');
+		chopper.scale.setTo(-0.08,0.08);
 		this.physics.arcade.enable(chopper);
 		chopper.enableBody = true;
 		chopper.body.velocity.x = 100;
 
 		//set chopper animations
-		chopper.animations.add('chopperFly', [0,1], 10, true);
+		chopper.animations.add('chopperFly', [0,1], 5, true);
 
 		//creating news van
 		van = game.add.sprite(20,425, 'van', 'NewsVan1');
@@ -435,7 +433,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
-
 		if (numPadArray[1] == keyNum0 && redcheck == true)
 		{
 			red = game.add.sprite(492,630,'red');
@@ -443,7 +440,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
-
 		if (numPadArray[2] == keyNum0 && redcheck == true)
 		{
 			green = game.add.sprite(672,630,'red');
@@ -451,7 +447,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
-
 		if (numPadArray[3] == keyNum0 && redcheck == true)
 		{
 			red = game.add.sprite(852,630,'red');
@@ -459,7 +454,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			redcheck = false;
 		}
-
 			//Gray
 		if (numPadArray[0] == keyNum8 && graycheck == true)
 		{
@@ -468,7 +462,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
-
 		if (numPadArray[1] == keyNum8 && graycheck == true)
 		{
 			gray = game.add.sprite(492,630,'gray');
@@ -476,7 +469,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
-
 		if (numPadArray[2] == keyNum8 && graycheck == true)
 		{
 			green = game.add.sprite(672,630,'gray');
@@ -484,7 +476,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
-
 		if (numPadArray[3] == keyNum8 && graycheck == true)
 		{
 			gray = game.add.sprite(852,630,'gray');
@@ -492,9 +483,7 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			graycheck = false;
 		}
-
 			//Pink
-
 			if (numPadArray[0] == keyNum6 && pinkcheck == true)
 		{
 			pink = game.add.sprite(312,630,'pink');
@@ -502,7 +491,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
-
 		if (numPadArray[1] == keyNum6 && pinkcheck == true)
 		{
 			pink = game.add.sprite(492,630,'pink');
@@ -510,7 +498,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
-
 		if (numPadArray[2] == keyNum6 && pinkcheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -518,7 +505,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
-
 		if (numPadArray[3] == keyNum6 && pinkcheck == true)
 		
 			pink = game.add.sprite(852,630,'green');
@@ -526,7 +512,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			pinkcheck = false;
 		}
-
 		//Yellow
 		if (numPadArray[0] == keyNum2 && yellowcheck == true)
 		{
@@ -535,7 +520,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
-
 		if (numPadArray[1] == keyNum2 && yellowcheck == true)
 		{
 			yellow = game.add.sprite(492,630,'yellow');
@@ -543,7 +527,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
-
 		if (numPadArray[2] == keyNum2 && yellowcheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -551,7 +534,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
-
 		if (numPadArray[3] == keyNum2 && yellowcheck == true)
 		{
 			yellow = game.add.sprite(852,630,'green');
@@ -559,7 +541,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			yellowcheck = false;
 		}
-
 		//white
 		if (numPadArray[0] == keyNum9 && whitecheck == true)
 		{
@@ -568,7 +549,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
-
 		if (numPadArray[1] == keyNum9 && whitecheck == true)
 		{
 			white = game.add.sprite(492,630,'white');
@@ -576,7 +556,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
-
 		if (numPadArray[2] == keyNum9 && whitecheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -584,7 +563,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
-
 		if (numPadArray[3] == keyNum9 && whitecheck == true)
 		{
 			white = game.add.sprite(852,630,'green');
@@ -592,9 +570,7 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			whitecheck = false;
 		}
-
 		//blue
-
 		if (numPadArray[0] == keyNum4 && bluecheck == true)
 		{
 			blue = game.add.sprite(312,630,'blue');
@@ -602,7 +578,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
-
 		if (numPadArray[1] == keyNum4 && bluecheck == true)
 		{
 			blue = game.add.sprite(492,630,'blue');
@@ -610,7 +585,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
-
 		if (numPadArray[2] == keyNum4 && bluecheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -618,7 +592,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
-
 		if (numPadArray[3] == keyNum4 && bluecheck == true)
 		{
 			blue = game.add.sprite(852,630,'green');
@@ -626,7 +599,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			bluecheck = false;
 		}
-
 		//brown
 		if (numPadArray[0] == keyNum7 && browncheck == true)
 		{
@@ -635,7 +607,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
-
 		if (numPadArray[1] == keyNum7 && browncheck == true)
 		{
 			brown = game.add.sprite(492,630,'brown');
@@ -643,7 +614,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
-
 		if (numPadArray[2] == keyNum7 && browncheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -651,7 +621,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
-
 		if (numPadArray[3] == keyNum7 && browncheck == true)
 		{
 			brown = game.add.sprite(852,630,'green');
@@ -659,7 +628,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			browncheck = false;
 		}
-
 		//purple
 		if (numPadArray[0] == keyNum5 && purplecheck == true)
 		{
@@ -668,7 +636,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
-
 		if (numPadArray[1] == keyNum5 && purplecheck == true)
 		{
 			purple = game.add.sprite(492,630,'purple');
@@ -676,7 +643,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
-
 		if (numPadArray[2] == keyNum5 && purplecheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -684,7 +650,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
-
 		if (numPadArray[3] == keyNum5 && purplecheck == true)
 		{
 			purple = game.add.sprite(852,630,'green');
@@ -692,7 +657,6 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			purplecheck = false;
 		}
-
 		//orange
 			if (numPadArray[0] == keyNum1 && orangecheck == true)
 		{
@@ -701,7 +665,6 @@ Play.prototype = {
 			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
-
 		if (numPadArray[1] == keyNum1 && orangecheck == true)
 		{
 			orange = game.add.sprite(492,630,'orange');
@@ -709,7 +672,6 @@ Play.prototype = {
 			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
-
 		if (numPadArray[2] == keyNum1 && orangecheck == true)
 		{
 			green = game.add.sprite(672,630,'green');
@@ -717,7 +679,6 @@ Play.prototype = {
 			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
-
 		if (numPadArray[3] == keyNum1 && orangecheck == true)
 		{
 			orange = game.add.sprite(852,630,'green');
@@ -936,12 +897,10 @@ WireCut.prototype = {
 
 	create: function() {
 		/*this.physics.startSystem(Phaser.Physics.ARCADE);
-
 		test = game.add.image(150,150, 'test');
 		test.anchor.setTo(0.5,0.5);
 		test.inputEnabled = true;
 		test.input.enableDrag(true);
-
 		this.physics.arcade.enable(test);
 	
 		testbomb = game.add.image(250,250, 'bomb');
@@ -950,38 +909,42 @@ WireCut.prototype = {
 		//testbomb.body.velocity.x = 10;*/
 
 		//create bombTray Sprite
-		bombTray = game.add.sprite(-150,-150,'BombTray');
+		bombTray = game.add.sprite(-400,-225,'BombTray');
+		bombTray.scale.setTo(1.25,1.25);
 
 		//create yellow wire sprite
-		yellow = game.add.sprite(850,325, 'wires', 'Yellow');
+		yellow = game.add.sprite(850,220, 'wires', 'Y');
 		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
+		yellow.scale.setTo(1.25,1);
 		//yellow.inputEnabled = true;
 		//yellow.events.onInputDown.add(WireListener, {'check1': 1}, this);
 
 		//yellow.input.enableDrag(true);
 		//create red wire sprite
-		red = game.add.sprite(850,720, 'wires', 'Red');
+		red = game.add.sprite(845,670, 'wires', 'R');
 		red.anchor.setTo(0.5,0.5);
 		red.inputEnabled = true;
-		red.events.onInputDown.add(WireListener, {'check1': 2}, this);
+		red.scale.setTo(1.25,1);
+		//red.events.onInputDown.add(WireListener, {'check1': 2}, this);
 		//red.input.enableDrag(true);
 
 		//create blue wire sprite
-		blue = game.add.sprite(850, 450, 'wires', 'Blue');
+		blue = game.add.sprite(850, 500, 'wires', 'B');
 		var check3 = 3;
 		blue.anchor.setTo(0.5,0.5);
-		blue.scale.setTo(-1,1);
+		blue.scale.setTo(1.25,1);
 		blue.inputEnabled = true;
 		//blue.events.onInputDown.add(WireListener, check3, this);
 		
-		//blue.input.enableDrag(true);
+		blue.input.enableDrag(true);
 
 		//create a green wire sprite
-		green = game.add.sprite(850, 350, 'wires', 'Green');
+		green = game.add.sprite(850, 350, 'wires', 'G');
 		var check4 = 4;
 		green.anchor.setTo(0.5,0.5);
 		green.inputEnabled = true;
+		green.scale.setTo(1.25,1);
 		//green.events.onInputDown.add(WireListener, check4, this);
 		//green.input.enableDrag(true);
 
@@ -1015,7 +978,7 @@ WireCut.prototype = {
 		}
 
 		if(cut2 == yellow) {
-			console.log('hit yellow' + cut2.obj);
+			console.log('hit yellow');
 			yellow.inputEnabled = true;
 			yellow.events.onInputDown.add(WireListener, {'check2': 1}, this);
 		} else if(cut2 == red) {
@@ -1087,38 +1050,228 @@ function WireListener() {
 	wirecheck3 = this.check3;
 	wirecheck4 = this.check4;
 
-	//console.log("this is check " + check);
 	if(wirecheck1 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
-		var yellowLeft = game.add.sprite(710,250, 'wires', 'Yellow(L)');
+		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
 		//spawn right cut yellow wire
-		var yellowRight = game.add.sprite(980, 350, 'wires', 'Yellow(R)');
+		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
 		wirecheck1++;
-	}
-
-	if(wirecheck2 == 2) {
+	} else if(wirecheck1 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
-		var redLeft = game.add.sprite(710, 350, 'wires', 'Red(L)');
+		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
 
-		var redRight = game.add.sprite(980, 400, 'wires', 'Red(R)');
+		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
-		wirecheck2++;
+		wirecheck1++;
+	} else if(wirecheck1 == 3) {
+		console.log('this is blue check');
+		blue.destroy();
+		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.anchor.setTo(0.5,0.5);
+		blueLeft.inputEnabled = true;
+		blueLeft.input.enableDrag(true);
+
+		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.anchor.setTo(0.5,0.5);
+		blueRight.inputEnabled = true;
+		blueRight.input.enableDrag(true);
+
+	} else if(wirecheck1 == 4) {
+		console.log('this is green check');
+		green.destroy();
+		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.anchor.setTo(0.5,0.5);
+		greenLeft.inputEnabled = true;
+		greenLeft.input.enableDrag(true);
+
+		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.anchor.setTo(0.5,0.5);
+		greenRight.inputEnabled = true;
+		greenRight.input.enableDrag(true);
+	}
+
+	if(wirecheck2 == 1) {
+		console.log("this is  yellow check ");
+		game.debug.body(yellow);
+		yellow.destroy();
+		//spawn left cut yellow wire
+		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.anchor.setTo(0.5,0.5);
+		yellowLeft.inputEnabled = true;
+		yellowLeft.input.enableDrag(true);
+		//spawn right cut yellow wire
+		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.anchor.setTo(0.5,0.5);
+		yellowRight.inputEnabled = true;
+		yellowRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck2 == 2) {
+		console.log("this is  red check ");
+		game.debug.body(red);
+		red.destroy();
+		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.anchor.setTo(0.5,0.5);
+		redLeft.inputEnabled = true;
+		redLeft.input.enableDrag(true);
+
+		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.anchor.setTo(0.5,0.5);
+		redRight.inputEnabled = true;
+		redRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck2 == 3) {
+		console.log('this is blue check');
+		blue.destroy();
+		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.anchor.setTo(0.5,0.5);
+		blueLeft.inputEnabled = true;
+		blueLeft.input.enableDrag(true);
+
+		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.anchor.setTo(0.5,0.5);
+		blueRight.inputEnabled = true;
+		blueRight.input.enableDrag(true);
+
+	} else if(wirecheck2 == 4) {
+		console.log('this is green check');
+		green.destroy();
+		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.anchor.setTo(0.5,0.5);
+		greenLeft.inputEnabled = true;
+		greenLeft.input.enableDrag(true);
+
+		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.anchor.setTo(0.5,0.5);
+		greenRight.inputEnabled = true;
+		greenRight.input.enableDrag(true);
+	}
+
+	if(wirecheck3 == 1) {
+		console.log("this is  yellow check ");
+		game.debug.body(yellow);
+		yellow.destroy();
+		//spawn left cut yellow wire
+		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.anchor.setTo(0.5,0.5);
+		yellowLeft.inputEnabled = true;
+		yellowLeft.input.enableDrag(true);
+		//spawn right cut yellow wire
+		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.anchor.setTo(0.5,0.5);
+		yellowRight.inputEnabled = true;
+		yellowRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck3 == 2) {
+		console.log("this is  red check ");
+		game.debug.body(red);
+		red.destroy();
+		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.anchor.setTo(0.5,0.5);
+		redLeft.inputEnabled = true;
+		redLeft.input.enableDrag(true);
+
+		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.anchor.setTo(0.5,0.5);
+		redRight.inputEnabled = true;
+		redRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck3 == 3) {
+		console.log('this is blue check');
+		blue.destroy();
+		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.anchor.setTo(0.5,0.5);
+		blueLeft.inputEnabled = true;
+		blueLeft.input.enableDrag(true);
+
+		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.anchor.setTo(0.5,0.5);
+		blueRight.inputEnabled = true;
+		blueRight.input.enableDrag(true);
+
+	} else if(wirecheck3 == 4) {
+		console.log('this is green check');
+		green.destroy();
+		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.anchor.setTo(0.5,0.5);
+		greenLeft.inputEnabled = true;
+		greenLeft.input.enableDrag(true);
+
+		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.anchor.setTo(0.5,0.5);
+		greenRight.inputEnabled = true;
+		greenRight.input.enableDrag(true);
+	}
+
+	if(wirecheck4 == 1) {
+		console.log("this is  yellow check ");
+		game.debug.body(yellow);
+		yellow.destroy();
+		//spawn left cut yellow wire
+		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.anchor.setTo(0.5,0.5);
+		yellowLeft.inputEnabled = true;
+		yellowLeft.input.enableDrag(true);
+		//spawn right cut yellow wire
+		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.anchor.setTo(0.5,0.5);
+		yellowRight.inputEnabled = true;
+		yellowRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck4 == 2) {
+		console.log("this is  red check ");
+		game.debug.body(red);
+		red.destroy();
+		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.anchor.setTo(0.5,0.5);
+		redLeft.inputEnabled = true;
+		redLeft.input.enableDrag(true);
+
+		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.anchor.setTo(0.5,0.5);
+		redRight.inputEnabled = true;
+		redRight.input.enableDrag(true);
+		wirecheck1++;
+	} else if(wirecheck4 == 3) {
+		console.log('this is blue check');
+		blue.destroy();
+		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.anchor.setTo(0.5,0.5);
+		blueLeft.inputEnabled = true;
+		blueLeft.input.enableDrag(true);
+
+		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.anchor.setTo(0.5,0.5);
+		blueRight.inputEnabled = true;
+		blueRight.input.enableDrag(true);
+
+	} else if(wirecheck4 == 4) {
+		console.log('this is green check');
+		green.destroy();
+		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.anchor.setTo(0.5,0.5);
+		greenLeft.inputEnabled = true;
+		greenLeft.input.enableDrag(true);
+
+		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.anchor.setTo(0.5,0.5);
+		greenRight.inputEnabled = true;
+		greenRight.input.enableDrag(true);
 	}
 }
 
