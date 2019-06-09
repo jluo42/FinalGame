@@ -888,6 +888,7 @@ var speed;
 var bombTray, yellow, red, blue, green;
 var cutWireArray, cut1, cut2, cut3, cut4;
 var check, wirecheck1, wirecheck2, wirecheck3, wirecheck4;
+var connect1 = true, connect2 = true, connect3 = true, connect4 = true;
 var connect = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
@@ -896,24 +897,13 @@ WireCut.prototype = {
 	},
 
 	create: function() {
-		/*this.physics.startSystem(Phaser.Physics.ARCADE);
-		test = game.add.image(150,150, 'test');
-		test.anchor.setTo(0.5,0.5);
-		test.inputEnabled = true;
-		test.input.enableDrag(true);
-		this.physics.arcade.enable(test);
-	
-		testbomb = game.add.image(250,250, 'bomb');
-		testbomb.scale.setTo(.15,.15);
-		this.physics.arcade.enable(testbomb);
-		//testbomb.body.velocity.x = 10;*/
 
 		//create bombTray Sprite
 		bombTray = game.add.sprite(-400,-225,'BombTray');
 		bombTray.scale.setTo(1.25,1.25);
 
 		//create yellow wire sprite
-		yellow = game.add.sprite(850,220, 'wires', 'Y');
+		yellow = game.add.sprite(850,210, 'wires', 'Y');
 		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
 		yellow.scale.setTo(1.25,1);
@@ -936,8 +926,6 @@ WireCut.prototype = {
 		blue.scale.setTo(1.25,1);
 		blue.inputEnabled = true;
 		//blue.events.onInputDown.add(WireListener, check3, this);
-		
-		blue.input.enableDrag(true);
 
 		//create a green wire sprite
 		green = game.add.sprite(850, 350, 'wires', 'G');
@@ -976,7 +964,7 @@ WireCut.prototype = {
 			green.inputEnabled = true;
 			green.events.onInputDown.add(WireListener, {'check1': 4}, this);
 		}
-
+	
 		if(cut2 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -994,7 +982,7 @@ WireCut.prototype = {
 			green.inputEnabled = true;
 			green.events.onInputDown.add(WireListener, {'check2': 4}, this);
 		}
-
+	
 		if(cut3 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1049,7 +1037,7 @@ function WireListener() {
 	wirecheck2 = this.check2;
 	wirecheck3 = this.check3;
 	wirecheck4 = this.check4;
-
+if(connect1 == true) {
 	if(wirecheck1 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
@@ -1064,6 +1052,7 @@ function WireListener() {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
+		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 2) {
 		console.log("this is  red check ");
@@ -1078,6 +1067,7 @@ function WireListener() {
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
+		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 3) {
 		console.log('this is blue check');
@@ -1091,6 +1081,8 @@ function WireListener() {
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		connect1 = false;
+		wirecheck1++
 
 	} else if(wirecheck1 == 4) {
 		console.log('this is green check');
@@ -1104,8 +1096,12 @@ function WireListener() {
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		connect1 = false;
+		wirecheck1++
 	}
+}
 
+if(connect1 == false){
 	if(wirecheck2 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
@@ -1120,7 +1116,8 @@ function WireListener() {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck2++;
+		connect2 = false;
 	} else if(wirecheck2 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
@@ -1134,7 +1131,8 @@ function WireListener() {
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck2++;
+		connect2 = false;
 	} else if(wirecheck2 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
@@ -1147,7 +1145,8 @@ function WireListener() {
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
-
+		wirecheck2++;
+		connect2 = false;
 	} else if(wirecheck2 == 4) {
 		console.log('this is green check');
 		green.destroy();
@@ -1160,8 +1159,12 @@ function WireListener() {
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		wirecheck2++;
+		connect2 = false;
 	}
+}
 
+if(connect2 == false) {
 	if(wirecheck3 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
@@ -1176,7 +1179,8 @@ function WireListener() {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck3++;
+		connect3 = false;
 	} else if(wirecheck3 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
@@ -1190,7 +1194,8 @@ function WireListener() {
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck3++;
+		connect3 = false;
 	} else if(wirecheck3 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
@@ -1203,6 +1208,8 @@ function WireListener() {
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		wirecheck3++;
+		connect3 = false;
 
 	} else if(wirecheck3 == 4) {
 		console.log('this is green check');
@@ -1216,8 +1223,12 @@ function WireListener() {
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		wirecheck3++;
+		connect3 = false;
 	}
+}
 
+if(connect3 == false) {
 	if(wirecheck4 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
@@ -1232,7 +1243,7 @@ function WireListener() {
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck4++;
 	} else if(wirecheck4 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
@@ -1246,7 +1257,7 @@ function WireListener() {
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
-		wirecheck1++;
+		wirecheck4++;
 	} else if(wirecheck4 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
@@ -1259,7 +1270,7 @@ function WireListener() {
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
-
+		wirecheck4++;
 	} else if(wirecheck4 == 4) {
 		console.log('this is green check');
 		green.destroy();
@@ -1272,7 +1283,9 @@ function WireListener() {
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		wirecheck4++;
 	}
+}
 }
 
 
