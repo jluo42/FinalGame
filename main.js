@@ -40,6 +40,7 @@ MainMenu.prototype = {
 		game.load.atlas('copCar', 'assets/img/PoliceCar.png', 'assets/img/PoliceCar.json');
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
 		game.load.atlas('wires', 'assets/img/Wires.png', 'assets/img/Wires.json');
+		game.load.atlas('green', 'assets/img/colors.png', 'assets/img/colors.json');
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -99,6 +100,8 @@ var check;
 var beep;
 var error;
 var explosion;
+var green;
+var greencheck;
 
 var Play = function(game) {};
 Play.prototype = {
@@ -115,6 +118,8 @@ Play.prototype = {
 
 
 	create: function() {
+
+
 		//enabling physics for the game
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
@@ -229,6 +234,15 @@ Play.prototype = {
 		num9 = numPadArray[8];
 		num10 = numPadArray[9];
 
+		greencheck = true;
+		/*
+		if (numPadArray[0] == keyNum3)
+		{
+		green = game.add.sprite(312,630,'green');
+		green.scale.setTo(.35,.3);
+		}
+		*/
+
 		//creating the text with keyCodes
 		keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
 		keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
@@ -241,6 +255,9 @@ Play.prototype = {
 			getNewCode();
 		}
 		*/
+
+		
+		
 
 		//bomb sounds
 		beep = game.add.audio('beep');
@@ -342,6 +359,38 @@ Play.prototype = {
 
 		if(userInput == keyNum2) {
 			game.state.start('GameOver');
+		}
+
+		if (numPadArray[0] == keyNum3 && greencheck == true)
+		{
+			green = game.add.sprite(312,630,'green');
+			green.scale.setTo(.35,.3);
+			keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
+			greencheck = false;
+		}
+
+		if (numPadArray[1] == keyNum3 && greencheck == true)
+		{
+			green = game.add.sprite(492,630,'green');
+			green.scale.setTo(.35,.3);
+			keyText2 = game.add.text(500, 635, num2.keyCode, {font: "40px Arial", fill: "#000"}); 
+			greencheck = false;
+		}
+
+		if (numPadArray[2] == keyNum3 && greencheck == true)
+		{
+			green = game.add.sprite(672,630,'green');
+			green.scale.setTo(.35,.3);
+			keyText3 = game.add.text(675, 635, num3.keyCode, {font: "40px Arial", fill: "#000"}); 
+			greencheck = false;
+		}
+
+		if (numPadArray[3] == keyNum3 && greencheck == true)
+		{
+			green = game.add.sprite(852,630,'green');
+			green.scale.setTo(.35,.3);
+			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
+			greencheck = false;
 		}
 
 		//key presses for the mechanic of the game.
@@ -515,6 +564,7 @@ function getNewCode() {
 		num9 = numPadArray[8];
 		num10 = numPadArray[9];
 
+		greencheck = true;
 
 		
 		rndbombNum = game.rnd.integerInRange(1000,9999);
