@@ -109,6 +109,9 @@ var bluecheck;
 var browncheck;
 var purplecheck;
 var orangecheck;
+//var timeRemaining;
+var timeReduction = false;
+var timerTracker;
 
 var Play = function(game) {};
 Play.prototype = {
@@ -336,12 +339,24 @@ Play.prototype = {
 
         me.timeLabel.text = result;
 
+        //reduce time if character messes up on mechanic 1;
+
+        if (timeReduction == true)
+        {
+        	//timeRemaining -= 5;
+        	me.totalTime -=5;
+
+        	timeReduction = false;
+        }
+
         if(me.timeElapsed >= me.totalTime){
         	explosion.play();
         	backgroundMusic.stop();
     	game.state.start('GameOver');
 		}
-
+		//console.log(timeRemaining);
+		timerTracker = timeRemaining;
+		console.log(timerTracker);
     },
 
 	update: function() {
@@ -717,14 +732,14 @@ Play.prototype = {
 						beep.play();
 						displayText(num4, displayNum4);
 						//game.state.start('GameOver');
-						score += 15;
+						score += 10;
    						scoreText.text = score + '% Diffused';
 
    						//win condition
 
    						if (score >= 100)
    						{
-   							game.state.start('GameWin');
+   							game.state.start('WireCut');
    						}
    						game.paused = true;
    						game.paused = false;
@@ -791,7 +806,7 @@ function shuffle(array) {
 
 function checker()	{
 	error.play();
-	score -= 10;
+	timeReduction = true;
 	game.paused = true;
 	game.paused = false;
 	scoreText.text = score + '% Diffused';
@@ -1026,7 +1041,72 @@ WireCut.prototype = {
 			green.events.onInputDown.add(WireListener, {'check4': 4}, this);
 		}
 
+		var me = this;
+		me.startTime = new Date();
+		me.totalTime = timerTracker;
+		me.timeElapsed = 0;
+		me.createTimer();
+		me.gameTimer = game.time.events.loop(100, function(){
+		me.updateTimer();
+		});
+		
+
 	},
+
+	//function for the timer
+	createTimer: function(){
+
+        var me = this;
+
+        me.timeLabel = me.game.add.text(me.game.world.centerX-5, 0, "00:00", {font: "75px Arial", fill: "#000"}); 
+        me.timeLabel.anchor.setTo(0.5, 0);
+        me.timeLabel.align = 'center';
+
+    },
+    //function to update the timer
+   updateTimer: function(){
+
+        var me = this;
+
+        var currentTime = new Date();
+        var timeDifference = me.startTime.getTime() - currentTime.getTime();
+
+        //Time elapsed in seconds
+        me.timeElapsed = Math.abs(timeDifference / 1000);
+
+        //Time remaining in seconds
+        var timeRemaining = me.totalTime - me.timeElapsed; 
+
+        //Convert seconds into minutes and seconds
+        var minutes = Math.floor(timeRemaining / 60);
+        var seconds = Math.floor(timeRemaining) - (60 * minutes);
+
+        //Display minutes, add a 0 to the start if less than 10
+        var result = (minutes < 10) ? "0" + minutes : minutes; 
+
+        //Display seconds, add a 0 to the start if less than 10
+        result += (seconds < 10) ? ":0" + seconds : ":" + seconds; 
+
+        me.timeLabel.text = result;
+
+        //reduce time if character messes up on mechanic 1;
+
+        if (timeReduction == true)
+        {
+        	//timeRemaining -= 5;
+        	me.totalTime -=5;
+
+        	timeReduction = false;
+        }
+
+        if(me.timeElapsed >= me.totalTime){
+        	explosion.play();
+        	backgroundMusic.stop();
+    	game.state.start('GameOver');
+		}
+		console.log(timeRemaining);
+		//timerTracker = me.totalTime;
+    },
 
 	update: function() {
 
