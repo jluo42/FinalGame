@@ -890,7 +890,9 @@ var shuffleOnce = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
 	init: function() {
-		//connect1 = true
+		connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
+		shuffleOnce = true;
+		startConnect = false;
 	},
 
 	preload: function() {
