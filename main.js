@@ -878,11 +878,14 @@ function getNewCode() {
 
 var test, testbomb;
 var speed;
+var startConnect = false;
 var bombTray, yellow, red, blue, green;
 var cutWireArray, cut1, cut2, cut3, cut4;
+var connectLeft1, connectRight1;
 var check, wirecheck1, wirecheck2, wirecheck3, wirecheck4;
-var connect1 = true, connect2 = true, connect3 = true, connect4 = true;
+var connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
 var connect = true;
+var shuffleOnce = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
 	preload: function() {
@@ -1011,84 +1014,134 @@ WireCut.prototype = {
 			green.inputEnabled = true;
 			green.events.onInputDown.add(WireListener, {'check4': 4}, this);
 		}
+
 	},
 
 	update: function() {
-		//this.physics.arcade.enable(test);
-		//var overlap = game.physics.arcade.collide(test, testbomb);
-		//console.log(overlap);
-		//test.body.velocity.x = 0;
-		//test.body.velocity.x = -110;
 
-		
+		if(allConnect == false){
+			if(shuffleOnce == true) {
+				shuffleOnce = false;
+				shuffle(leftArray);
+				shuffle(rightArray);
+			}
+			startConnect = true;
+			//WireCollision(leftArray, rightArray);
+			if(game.physics.arcade.collide(leftArray[0], rightArray[0])) {
+				console.log('hit');
+				if(game.physics.arcade.collide(leftArray[1], rightArray[1])) {
+					console.log('hit1');
+					if(game.physics.arcade.collide(leftArray[2], rightArray[2])) {
+						console.log('hit2');
+							if(game.physics.arcade.collide(leftArray[3], rightArray[3])) {
+								console.log('hit3');
+							}
+					}
+				}
+			}
+			
+
+		}
 	},
 
 
 }
+
+function WireCollision(leftConnectArray, rightConnectArray) {
+	var left1 = leftConnectArray[0];
+	var right1 = rightConnectArray[0];
+	var left2 = leftConnectArray[1];
+	var right2 = rightConnectArray[1];
+
+	game.physics.arcade.collide(left1, right1);
+	game.physics.arcade.collide(left2, right2);
+	console.log('hit');
+}
+
+var yellowLeft, yellowRight, redLeft, redRight, blueLeft, blueRight, greenLeft, greenRight;
+var leftArray = [], rightArray = [];
 function WireListener() {		
 	wirecheck1 = this.check1;
 	wirecheck2 = this.check2;
 	wirecheck3 = this.check3;
 	wirecheck4 = this.check4;
+
 if(connect1 == true) {
 	if(wirecheck1 == 1) {
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
-		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
+		game.physics.arcade.enable(yellowLeft);
+		leftArray[0] = yellowLeft;
+
 		//spawn right cut yellow wire
-		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
+		game.physics.arcade.enable(yellowRight);
+		rightArray[0] = yellowRight;
 		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
-		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
+		game.physics.arcade.enable(redLeft);
+		leftArray[0] = redLeft;
 
-		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
+		game.physics.arcade.enable(redRight);
+		rightArray[0] = redRight;
 		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
-		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
+		game.physics.arcade.enable(blueLeft);
+		leftArray[0] = blueLeft;
 
-		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		game.physics.arcade.enable(blueRight);
+		rightArray[0] = blueRight;
 		connect1 = false;
 		wirecheck1++
 
 	} else if(wirecheck1 == 4) {
 		console.log('this is green check');
 		green.destroy();
-		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
+		game.physics.arcade.enable(greenLeft);
+		leftArray[0] = greenLeft;
 
-		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		game.physics.arcade.enable(greenRight);
+		rightArray[0] = greenRight;
 		connect1 = false;
 		wirecheck1++
 	}
@@ -1100,58 +1153,74 @@ if(connect1 == false){
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
-		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
+		game.physics.arcade.enable(yellowLeft);
+		leftArray[1] = yellowLeft;
 		//spawn right cut yellow wire
-		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
+		game.physics.arcade.enable(yellowRight);
+		rightArray[1] = yellowRight;
 		wirecheck2++;
 		connect2 = false;
 	} else if(wirecheck2 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
-		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
+		game.physics.arcade.enable(redLeft);
+		leftArray[1] = redLeft;
 
-		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
+		game.physics.arcade.enable(redRight);
+		rightArray[1] = redRight;
 		wirecheck2++;
 		connect2 = false;
 	} else if(wirecheck2 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
-		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
+		game.physics.arcade.enable(blueLeft);
+		leftArray[1] = blueLeft;
 
-		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		game.physics.arcade.enable(blueRight);
+		rightArray[1] = blueRight;
 		wirecheck2++;
 		connect2 = false;
 	} else if(wirecheck2 == 4) {
 		console.log('this is green check');
 		green.destroy();
-		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
+		game.physics.arcade.enable(greenLeft);
+		leftArray[1] = greenLeft;
 
-		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		game.physics.arcade.enable(greenRight);
+		rightArray[1] = greenRight;
 		wirecheck2++;
 		connect2 = false;
 	}
@@ -1163,59 +1232,75 @@ if(connect2 == false) {
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
-		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
+		game.physics.arcade.enable(yellowLeft);
+		leftArray[2] = yellowLeft;
 		//spawn right cut yellow wire
-		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
+		game.physics.arcade.enable(yellowRight);
+		rightArray[2] = yellowRight;
 		wirecheck3++;
 		connect3 = false;
 	} else if(wirecheck3 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
-		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
+		game.physics.arcade.enable(redLeft);
+		leftArray[2] = redLeft;
 
-		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
+		game.physics.arcade.enable(redRight);
+		rightArray[2] = redRight;
 		wirecheck3++;
 		connect3 = false;
 	} else if(wirecheck3 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
-		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
+		game.physics.arcade.enable(blueLeft);
+		leftArray[2] = blueLeft;
 
-		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		game.physics.arcade.enable(blueRight);
+		rightArray[2] = blueRight;
 		wirecheck3++;
 		connect3 = false;
 
 	} else if(wirecheck3 == 4) {
 		console.log('this is green check');
 		green.destroy();
-		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
+		game.physics.arcade.enable(greenLeft);
+		leftArray[2] = greenLeft;
 
-		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		game.physics.arcade.enable(greenRight);
+		rightArray[2] = greenRight;
 		wirecheck3++;
 		connect3 = false;
 	}
@@ -1227,58 +1312,82 @@ if(connect3 == false) {
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
-		var yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
+		game.physics.arcade.enable(yellowLeft);
+		leftArray[3] = yellowLeft;
+
 		//spawn right cut yellow wire
-		var yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
+		game.physics.arcade.enable(yellowRight);
+		rightArray[3] = yellowRight;
+		allConnect = false;
 		wirecheck4++;
 	} else if(wirecheck4 == 2) {
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
-		var redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
+		game.physics.arcade.enable(redLeft);
+		leftArray[3] = redLeft;
 
-		var redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
+		game.physics.arcade.enable(redRight);
+		rightArray[3] = redRight;
+		allConnect = false;
 		wirecheck4++;
 	} else if(wirecheck4 == 3) {
 		console.log('this is blue check');
 		blue.destroy();
-		var blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
+		game.physics.arcade.enable(blueLeft);
+		leftArray[3] = blueLeft;
 
-		var blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
+		game.physics.arcade.enable(blueRight);
+		rightArray[3] = blueRight;
+		allConnect = false;
 		wirecheck4++;
 	} else if(wirecheck4 == 4) {
 		console.log('this is green check');
 		green.destroy();
-		var greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
+		game.physics.arcade.enable(greenLeft);
+		leftArray[3] = greenLeft;
 
-		var greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
+		game.physics.arcade.enable(greenRight);
+		rightArray[3] = greenRight;
+		allConnect = false;
 		wirecheck4++;
 	}
+
+
 }
+	
 }
 
 
