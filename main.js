@@ -40,6 +40,7 @@ MainMenu.prototype = {
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
 		game.load.atlas('wires', 'assets/img/Wires.png', 'assets/img/Wires.json');
 		game.load.atlas('green', 'assets/img/colors.png', 'assets/img/colors.json');
+
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
@@ -110,9 +111,12 @@ var bluecheck;
 var browncheck;
 var purplecheck;
 var orangecheck;
+var warning;
+var warningcheck = true;
 //var timeRemaining;
 var timeReduction = false;
 var timerTracker;
+var timeRemaining;
 
 var Play = function(game) {};
 Play.prototype = {
@@ -132,7 +136,9 @@ Play.prototype = {
 
 	create: function() {
 
+		game.time.events.add(Phaser.Timer.SECOND * 4, checkwarning, this);
 
+		console.log(timerTracker);
 		//enabling physics for the game
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
@@ -328,7 +334,7 @@ Play.prototype = {
         me.timeElapsed = Math.abs(timeDifference / 1000);
 
         //Time remaining in seconds
-        var timeRemaining = me.totalTime - me.timeElapsed; 
+         timeRemaining = me.totalTime - me.timeElapsed; 
 
         //Convert seconds into minutes and seconds
         var minutes = Math.floor(timeRemaining / 60);
@@ -343,6 +349,7 @@ Play.prototype = {
         me.timeLabel.text = result;
 
         //reduce time if character messes up on mechanic 1;
+
 
         if (timeReduction == true)
         {
@@ -360,6 +367,8 @@ Play.prototype = {
 		//console.log(timeRemaining);
 		timerTracker = timeRemaining;
 		console.log(timerTracker);
+
+		
     },
 
 	update: function() {		
@@ -367,6 +376,13 @@ Play.prototype = {
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('WireCut');
 		}
+
+		if (timeRemaining < 60 && warningcheck == false )
+        {
+        	warning = game.add.sprite(315, 365, 'warning');
+        	warning.scale.setTo(0.3,0.3);
+        	warningcheck = true;
+        }
 		//helicopter animation
 		chopper.animations.play('chopperFly');
 		//copCar animations
@@ -793,6 +809,8 @@ Play.prototype = {
 			}
 		}
 
+		 
+
 
 		
 		//console.log(game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1));
@@ -894,6 +912,11 @@ function getNewCode() {
 
 }
 
+function checkwarning()
+{
+	warningcheck = false;
+}
+
 var test, testbomb;
 var speed;
 var startConnect = false;
@@ -912,6 +935,7 @@ WireCut.prototype = {
 		connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
 		shuffleOnce = true;
 		startConnect = false;
+		warningcheck = false;
 	},
 
 	preload: function() {
@@ -1057,6 +1081,8 @@ WireCut.prototype = {
 		me.gameTimer = game.time.events.loop(100, function(){
 		me.updateTimer();
 		});
+
+
 		
 
 	},
@@ -1112,8 +1138,18 @@ WireCut.prototype = {
         	backgroundMusic.stop();
     	game.state.start('GameOver');
 		}
-		console.log(timeRemaining);
+
+		if (timeRemaining < 60 && warningcheck == false )
+        {
+        	warning = game.add.sprite(510, 55, 'warning');
+        	warning.scale.setTo(0.08,0.08);
+        	warningcheck = true;
+        }
+
+		
+		//console.log(timeRemaining);
 		//timerTracker = me.totalTime;
+
     },
 
 	update: function() {
@@ -1144,6 +1180,7 @@ WireCut.prototype = {
 			
 
 		}
+		
 	},
 
 
@@ -1563,7 +1600,7 @@ GameWin.prototype = {
 
 	create: function(){
 		game.add.image(0,0, 'WinScreen');
-		menuText = game.add.text(10, 720, 'You have defused the bomb!!!                             Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
+		menuText = game.add.text(10, 720, 'You have defused the bomb with ' + timerTracker + ' seconds!!!                            Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
 	},
 
 	update: function(){
