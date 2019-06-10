@@ -23,6 +23,7 @@ MainMenu.prototype = {
 		game.load.image('Disarmbackground', 'assets/img/DisarmBackground.png');
 		game.load.image('MainMenu01', 'assets/img/MainMenu01.png');
 		game.load.image('UIColor', 'assets/img/UIColorChart.png');
+		game.load.image('warning', 'assets/img/warning.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
 		//game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.audio('beep', 'assets/audio/beep.mp3');
@@ -118,6 +119,8 @@ Play.prototype = {
 	init: function() {
 		//reset score
 		score = 0;
+		numPresent = false;
+		timeReduction = false;
 
 	},
 	
@@ -359,7 +362,7 @@ Play.prototype = {
 		console.log(timerTracker);
     },
 
-	update: function() {
+	update: function() {		
 
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('WireCut');
@@ -902,7 +905,8 @@ var check, wirecheck1, wirecheck2, wirecheck3, wirecheck4;
 var connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
 var connect = true;
 var shuffleOnce = true;
-var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
+
+var WireCut = function(game) {}; 
 WireCut.prototype = {
 	init: function() {
 		connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
@@ -915,6 +919,10 @@ WireCut.prototype = {
 	},
 
 	create: function() {
+		//add background
+		var disarmbackground = game.add.sprite(0,0,'Disarmbackground');
+		disarmbackground.height = game.height;
+		disarmbackground.width = game.width;
 
 		//create bombTray Sprite
 		bombTray = game.add.sprite(-400,-225,'BombTray');
@@ -1122,16 +1130,12 @@ WireCut.prototype = {
 			startConnect = true;
 			//WireCollision(leftArray, rightArray);
 			if(game.physics.arcade.collide(leftArray[0], rightArray[0])) {
-				console.log('hit');
 				cutInstructions.text = "Connect the\n" + leftArray[1].name + "\nto the \n" + rightArray[1].name;
 				if(game.physics.arcade.collide(leftArray[1], rightArray[1])) {
-					console.log('hit1');
 					cutInstructions.text = "Connect the\n" + leftArray[2].name + "\nto the \n" + rightArray[2].name;
 					if(game.physics.arcade.collide(leftArray[2], rightArray[2])) {
-						console.log('hit2');
 						cutInstructions.text = "Connect the\n" + leftArray[3].name + "\nto the \n" + rightArray[3].name;
 							if(game.physics.arcade.collide(leftArray[3], rightArray[3])) {
-								console.log('hit3');
 								game.state.start('GameWin');
 							}
 					}
