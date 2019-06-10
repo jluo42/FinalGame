@@ -882,6 +882,7 @@ var startConnect = false;
 var bombTray, yellow, red, blue, green;
 var cutWireArray, cut1, cut2, cut3, cut4;
 var connectLeft1, connectRight1;
+var cutInstructions;
 var check, wirecheck1, wirecheck2, wirecheck3, wirecheck4;
 var connect1 = true, connect2 = true, connect3 = true, connect4 = true, allConnect = true;
 var connect = true;
@@ -900,6 +901,7 @@ WireCut.prototype = {
 
 		//create yellow wire sprite
 		yellow = game.add.sprite(850,210, 'wires', 'Y');
+		yellow.name = 'Yellow';
 		connect = true;
 		yellow.anchor.setTo(0.5,0.5);
 		yellow.scale.setTo(1.25,1);
@@ -909,6 +911,7 @@ WireCut.prototype = {
 		//yellow.input.enableDrag(true);
 		//create red wire sprite
 		red = game.add.sprite(845,670, 'wires', 'R');
+		red.name = 'Red';
 		red.anchor.setTo(0.5,0.5);
 		red.inputEnabled = true;
 		red.scale.setTo(1.25,1);
@@ -917,7 +920,7 @@ WireCut.prototype = {
 
 		//create blue wire sprite
 		blue = game.add.sprite(850, 500, 'wires', 'B');
-		var check3 = 3;
+		blue.name = 'Blue';
 		blue.anchor.setTo(0.5,0.5);
 		blue.scale.setTo(1.25,1);
 		blue.inputEnabled = true;
@@ -925,7 +928,7 @@ WireCut.prototype = {
 
 		//create a green wire sprite
 		green = game.add.sprite(850, 350, 'wires', 'G');
-		var check4 = 4;
+		green.name = 'Green';
 		green.anchor.setTo(0.5,0.5);
 		green.inputEnabled = true;
 		green.scale.setTo(1.25,1);
@@ -941,8 +944,9 @@ WireCut.prototype = {
 		cut2 = cutWireArray[1];
 		cut3 = cutWireArray[2];
 		cut4 = cutWireArray[3];
-
+		console.log(cut1.name);
 		//enable the cut to the given wire
+		cutInstructions = game.add.text(130, 165, "Cut the \n" + cut1.name + " Wire", {font: "40px Arial", fill: "#000"});
 		if(cut1 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -961,6 +965,7 @@ WireCut.prototype = {
 			green.events.onInputDown.add(WireListener, {'check1': 4}, this);
 		}
 	
+
 		if(cut2 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1019,6 +1024,7 @@ WireCut.prototype = {
 
 	update: function() {
 
+
 		if(allConnect == false){
 			if(shuffleOnce == true) {
 				shuffleOnce = false;
@@ -1068,6 +1074,7 @@ function WireListener() {
 
 if(connect1 == true) {
 	if(wirecheck1 == 1) {
+		cutInstructions.text = "Cut the \n" + cut2.name + " Wire";
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
 		yellow.destroy();
@@ -1089,6 +1096,7 @@ if(connect1 == true) {
 		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 2) {
+		cutInstructions.text = "Cut the \n" + cut2.name + " Wire";
 		console.log("this is  red check ");
 		game.debug.body(red);
 		red.destroy();
@@ -1108,6 +1116,7 @@ if(connect1 == true) {
 		connect1 = false;
 		wirecheck1++;
 	} else if(wirecheck1 == 3) {
+		cutInstructions.text = "Cut the \n" + cut2.name + " Wire";
 		console.log('this is blue check');
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
@@ -1127,6 +1136,7 @@ if(connect1 == true) {
 		wirecheck1++
 
 	} else if(wirecheck1 == 4) {
+		cutInstructions.text = "Cut the \n" + cut2.name + " Wire";
 		console.log('this is green check');
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
@@ -1150,6 +1160,7 @@ if(connect1 == true) {
 if(connect1 == false){
 	if(wirecheck2 == 1) {
 		console.log("this is  yellow check ");
+		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
@@ -1170,7 +1181,7 @@ if(connect1 == false){
 		connect2 = false;
 	} else if(wirecheck2 == 2) {
 		console.log("this is  red check ");
-		game.debug.body(red);
+		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
 		redLeft.anchor.setTo(0.5,0.5);
@@ -1189,6 +1200,7 @@ if(connect1 == false){
 		connect2 = false;
 	} else if(wirecheck2 == 3) {
 		console.log('this is blue check');
+		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
@@ -1207,6 +1219,7 @@ if(connect1 == false){
 		connect2 = false;
 	} else if(wirecheck2 == 4) {
 		console.log('this is green check');
+		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
@@ -1229,6 +1242,7 @@ if(connect1 == false){
 if(connect2 == false) {
 	if(wirecheck3 == 1) {
 		console.log("this is  yellow check ");
+		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		game.debug.body(yellow);
 		yellow.destroy();
 		//spawn left cut yellow wire
@@ -1249,6 +1263,7 @@ if(connect2 == false) {
 		connect3 = false;
 	} else if(wirecheck3 == 2) {
 		console.log("this is  red check ");
+		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		game.debug.body(red);
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
@@ -1268,6 +1283,7 @@ if(connect2 == false) {
 		connect3 = false;
 	} else if(wirecheck3 == 3) {
 		console.log('this is blue check');
+		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
 		blueLeft.anchor.setTo(0.5,0.5);
@@ -1287,6 +1303,7 @@ if(connect2 == false) {
 
 	} else if(wirecheck3 == 4) {
 		console.log('this is green check');
+		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
 		greenLeft.anchor.setTo(0.5,0.5);
