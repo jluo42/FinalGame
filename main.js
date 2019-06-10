@@ -889,6 +889,10 @@ var connect = true;
 var shuffleOnce = true;
 var WireCut = function(game) {}; //physics not working on seperate states, currently only working on 'play' state.
 WireCut.prototype = {
+	init: function() {
+		//connect1 = true
+	},
+
 	preload: function() {
 
 	},
@@ -1031,16 +1035,22 @@ WireCut.prototype = {
 				shuffle(leftArray);
 				shuffle(rightArray);
 			}
+			cutInstructions.fontSize = 20;
+			cutInstructions.text = "Connect the\n" + leftArray[0].name + "\nto the \n" + rightArray[0].name;
 			startConnect = true;
 			//WireCollision(leftArray, rightArray);
 			if(game.physics.arcade.collide(leftArray[0], rightArray[0])) {
 				console.log('hit');
+				cutInstructions.text = "Connect the\n" + leftArray[1].name + "\nto the \n" + rightArray[1].name;
 				if(game.physics.arcade.collide(leftArray[1], rightArray[1])) {
 					console.log('hit1');
+					cutInstructions.text = "Connect the\n" + leftArray[2].name + "\nto the \n" + rightArray[2].name;
 					if(game.physics.arcade.collide(leftArray[2], rightArray[2])) {
 						console.log('hit2');
+						cutInstructions.text = "Connect the\n" + leftArray[3].name + "\nto the \n" + rightArray[3].name;
 							if(game.physics.arcade.collide(leftArray[3], rightArray[3])) {
 								console.log('hit3');
+								game.state.start('GameWin');
 							}
 					}
 				}
@@ -1080,6 +1090,7 @@ if(connect1 == true) {
 		yellow.destroy();
 		//spawn left cut yellow wire
 		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.name = "Left Yellow Wire";
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
@@ -1088,6 +1099,7 @@ if(connect1 == true) {
 
 		//spawn right cut yellow wire
 		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.name = "Right Yellow Wire";
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
@@ -1101,6 +1113,7 @@ if(connect1 == true) {
 		game.debug.body(red);
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.name = "Left Red Wire";
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
@@ -1108,6 +1121,7 @@ if(connect1 == true) {
 		leftArray[0] = redLeft;
 
 		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.name = "Right Red Wire";
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
@@ -1120,6 +1134,7 @@ if(connect1 == true) {
 		console.log('this is blue check');
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.name = "Left Blue Wire";
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
@@ -1127,6 +1142,7 @@ if(connect1 == true) {
 		leftArray[0] = blueLeft;
 
 		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.name = "Right Blue Wire";
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
@@ -1140,6 +1156,7 @@ if(connect1 == true) {
 		console.log('this is green check');
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.name = "Left Green Wire";
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
@@ -1147,6 +1164,7 @@ if(connect1 == true) {
 		leftArray[0] = greenLeft;
 
 		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.name = "Right Green Wire";
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
@@ -1165,6 +1183,7 @@ if(connect1 == false){
 		yellow.destroy();
 		//spawn left cut yellow wire
 		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.name = "Left Yellow Wire";
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
@@ -1172,6 +1191,7 @@ if(connect1 == false){
 		leftArray[1] = yellowLeft;
 		//spawn right cut yellow wire
 		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.name = "Right Yellow Wire";
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
@@ -1184,6 +1204,7 @@ if(connect1 == false){
 		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.name = "Left Red Wire";
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
@@ -1191,6 +1212,7 @@ if(connect1 == false){
 		leftArray[1] = redLeft;
 
 		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.name = "Right Red Wire";
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
@@ -1203,6 +1225,7 @@ if(connect1 == false){
 		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.name = "Left Blue Wire";
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
@@ -1210,6 +1233,7 @@ if(connect1 == false){
 		leftArray[1] = blueLeft;
 
 		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.name = "Right Blue Wire";
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
@@ -1222,6 +1246,7 @@ if(connect1 == false){
 		cutInstructions.text = "Cut the \n" + cut3.name + " Wire";
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.name = "Left Green Wire";
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
@@ -1229,6 +1254,7 @@ if(connect1 == false){
 		leftArray[1] = greenLeft;
 
 		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.name = "Right Green Wire";
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
@@ -1247,6 +1273,7 @@ if(connect2 == false) {
 		yellow.destroy();
 		//spawn left cut yellow wire
 		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.name = "Left Yellow Wire";
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
@@ -1254,6 +1281,7 @@ if(connect2 == false) {
 		leftArray[2] = yellowLeft;
 		//spawn right cut yellow wire
 		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.name = "Right Yellow Wire";
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
@@ -1267,6 +1295,7 @@ if(connect2 == false) {
 		game.debug.body(red);
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.name = "Left Red Wire";
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
@@ -1274,6 +1303,7 @@ if(connect2 == false) {
 		leftArray[2] = redLeft;
 
 		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.name = "Right Red Wire";
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
@@ -1286,6 +1316,7 @@ if(connect2 == false) {
 		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.name = "Left Blue Wire";
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
@@ -1293,6 +1324,7 @@ if(connect2 == false) {
 		leftArray[2] = blueLeft;
 
 		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.name = "Right Blue Wire";
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
@@ -1306,6 +1338,7 @@ if(connect2 == false) {
 		cutInstructions.text = "Cut the \n" + cut4.name + " Wire";
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.name = "Left Green Wire";
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
@@ -1313,6 +1346,7 @@ if(connect2 == false) {
 		leftArray[2] = greenLeft;
 
 		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.name = "Right Green Wire";
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
@@ -1330,6 +1364,7 @@ if(connect3 == false) {
 		yellow.destroy();
 		//spawn left cut yellow wire
 		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
+		yellowLeft.name = "Left Yellow Wire";
 		yellowLeft.anchor.setTo(0.5,0.5);
 		yellowLeft.inputEnabled = true;
 		yellowLeft.input.enableDrag(true);
@@ -1338,6 +1373,7 @@ if(connect3 == false) {
 
 		//spawn right cut yellow wire
 		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
+		yellowRight.name = "Right Yellow Wire";
 		yellowRight.anchor.setTo(0.5,0.5);
 		yellowRight.inputEnabled = true;
 		yellowRight.input.enableDrag(true);
@@ -1350,6 +1386,7 @@ if(connect3 == false) {
 		game.debug.body(red);
 		red.destroy();
 		redLeft = game.add.sprite(620, 710, 'wires', 'R(L)');
+		redLeft.name = "Left Red Wire";
 		redLeft.anchor.setTo(0.5,0.5);
 		redLeft.inputEnabled = true;
 		redLeft.input.enableDrag(true);
@@ -1357,6 +1394,7 @@ if(connect3 == false) {
 		leftArray[3] = redLeft;
 
 		redRight = game.add.sprite(1060, 700, 'wires', 'R(R)');
+		redRight.name = "Right Red Wire";
 		redRight.anchor.setTo(0.5,0.5);
 		redRight.inputEnabled = true;
 		redRight.input.enableDrag(true);
@@ -1368,6 +1406,7 @@ if(connect3 == false) {
 		console.log('this is blue check');
 		blue.destroy();
 		blueLeft = game.add.sprite(620, 550, 'wires', 'B(L)');
+		blueLeft.name = "Left Blue Wire";
 		blueLeft.anchor.setTo(0.5,0.5);
 		blueLeft.inputEnabled = true;
 		blueLeft.input.enableDrag(true);
@@ -1375,6 +1414,7 @@ if(connect3 == false) {
 		leftArray[3] = blueLeft;
 
 		blueRight = game.add.sprite(1050, 475, 'wires', 'B(R)');
+		blueRight.name = "Right Blue Wire";
 		blueRight.anchor.setTo(0.5,0.5);
 		blueRight.inputEnabled = true;
 		blueRight.input.enableDrag(true);
@@ -1386,6 +1426,7 @@ if(connect3 == false) {
 		console.log('this is green check');
 		green.destroy();
 		greenLeft = game.add.sprite(620, 400, 'wires', 'G(L)');
+		greenLeft.name = "Left Green Wire";
 		greenLeft.anchor.setTo(0.5,0.5);
 		greenLeft.inputEnabled = true;
 		greenLeft.input.enableDrag(true);
@@ -1393,6 +1434,7 @@ if(connect3 == false) {
 		leftArray[3] = greenLeft;
 
 		greenRight = game.add.sprite(1050, 300, 'wires', 'G(R)');
+		greenRight.name = "Right Green Wire";
 		greenRight.anchor.setTo(0.5,0.5);
 		greenRight.inputEnabled = true;
 		greenRight.input.enableDrag(true);
