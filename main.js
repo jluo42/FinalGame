@@ -1,9 +1,9 @@
 // TEAM NUMBER 46
 // TEAM NAME: DEFUSERS
-// Johnny Luo
-// Reese Chong
-// Timothy Gee
-// Benjamin Tran
+// Johnny Luo (Programmer)
+// Reese Chong (Artist)
+// Timothy Gee (Programmer)
+// Benjamin Tran (Artist)
 // GITHUB REPO: https://github.com/jluo42/FinalGame
 
 "use strict";
@@ -17,6 +17,7 @@ var scoreText;
 var MainMenu = function(game){};
 MainMenu.prototype = {
 	preload: function() {
+		//load all the images
 		game.load.image('bomb', 'assets/img/bomb.png');
 		game.load.image('BombTray', 'assets/img/BombTray.png');
 		game.load.image('bombWire', 'assets/img/bombWire.png');
@@ -25,7 +26,7 @@ MainMenu.prototype = {
 		game.load.image('UIColor', 'assets/img/UIColorChart.png');
 		game.load.image('warning', 'assets/img/warning.png');
 		game.load.audio('click', 'assets/audio/click.mp3');
-		//game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
+		game.load.audio('backAudio', 'assets/audio/backAudio.mp3');
 		game.load.audio('beep', 'assets/audio/beep.mp3');
 		game.load.audio('error', 'assets/audio/error.mp3');
 		game.load.audio('explosion', 'assets/audio/explosion.mp3');
@@ -40,19 +41,23 @@ MainMenu.prototype = {
 		game.load.atlas('van', 'assets/img/NewsVanspritesheet.png', 'assets/img/NewsVansprites.json');
 		game.load.atlas('wires', 'assets/img/Wires.png', 'assets/img/Wires.json');
 		game.load.atlas('green', 'assets/img/colors.png', 'assets/img/colors.json');
+		game.load.atlas('errorBackground', 'assets/img/Error.png', 'assets/img/Error.json');
 
 	},
 	create: function() {
 		 game.stage.backgroundColor  = '#736357';
+		 //set MainMenu
 		 game.add.image(0,0, 'MainMenu01');	
-		 menuText = game.add.text(750, 380, 'Press Spacebar \n     To Play', { fontSize: '35px', fill: '#000' });
+		 menuText = game.add.text(820, 380, 'Press Spacebar \n     To Play', { fontSize: '35px', fill: '#000' });
 		// menuInstruction = game.add.text(300, 300, 'The Keycodes represents a number in the number keypad. \nFor example the number 101 would be #5 on the number pad. \nDecode all the keycodes and press and hold all \nfour of the keycodes to defuse the bomb. \nDO NOT LET GO OF THE NUMBERS. ', { fontSize: '25px', fill: '#000' });
 		//adding background music and looping it all the way.
+		//add music and loop background music.
 		backgroundMusic = game.add.audio('backAudio');
 		backgroundMusic.loopFull();
 	},
 
 	update: function() {
+		//Press spacebar to start.
 		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('Play');
 		}
@@ -68,7 +73,9 @@ BombCut.prototype = {
 	}
 }*/
 
+//initalize variables.
 var menuInstruction;
+var Disarmbackground;
 var backgroundMusic;
 var bomb;
 var bombMan, taylor, beanie, cop, bob, buffy;
@@ -116,6 +123,7 @@ var warningcheck = true;
 //var timeRemaining;
 var timeReduction = false;
 var timerTracker;
+var timerTracker2;
 var timeRemaining;
 
 var Play = function(game) {};
@@ -136,16 +144,18 @@ Play.prototype = {
 
 	create: function() {
 
+
+		//time event for warning.
 		game.time.events.add(Phaser.Timer.SECOND * 4, checkwarning, this);
 
-		console.log(timerTracker);
 		//enabling physics for the game
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
 		//create background
-		var Disarmbackground = game.add.sprite(0,0,'Disarmbackground');
+		Disarmbackground = game.add.sprite(0,0,'errorBackground', 'Background');
 		Disarmbackground.height = game.height;
 		Disarmbackground.width = game.width;
+		Disarmbackground.animations.add('redError', [0,1,2], 3, true);
 
 		//create beanie sprite and animations
 		beanie = game.add.sprite(900,300, 'Beanie', 'sprite1');
@@ -192,6 +202,7 @@ Play.prototype = {
 		copCar = game.add.sprite(775,425, 'copCar', 'PoliceCar1');
 		copCar.scale.setTo(0.25, 0.25);
 		
+		//create second cop car with animations
 		copCar1 = game.add.sprite(-100,575, 'copCar', 'PoliceCar1');
 		copCar1.scale.setTo(-0.25, 0.25);
 		game.physics.arcade.enable(copCar1);
@@ -203,11 +214,6 @@ Play.prototype = {
 		bomb = game.add.sprite(940,-20, 'bomb');
 		//set scale to fit screen
 		bomb.scale.setTo(.25,.25);
-
-		bomb.inputEnabled = true;
-		bomb.input.enableDrag(true);
-		game.physics.arcade.enable(bomb);
-		bomb.enableBody = true;
 
 		//create UI color chart
 		var color = game.add.sprite(0,50, 'UIColor');
@@ -253,6 +259,7 @@ Play.prototype = {
 		num9 = numPadArray[8];
 		num10 = numPadArray[9];
 
+		//the UI color checks is true
 		greencheck = true;
 		redcheck = true;
 		graycheck = true;
@@ -264,14 +271,6 @@ Play.prototype = {
 		purplecheck = true;
 		orangecheck = true;
 
-
-		/*
-		if (numPadArray[0] == keyNum3)
-		{
-		green = game.add.sprite(311.5,629,'green');
-		green.scale.setTo(.37,.32);
-		}
-		*/
 
 		//creating the text with keyCodes
 		keyText1 = game.add.text(350, 635, num1.keyCode, {font: "40px Arial", fill: "#000"}); 
@@ -317,6 +316,7 @@ Play.prototype = {
 
         var me = this;
 
+        //UI for the timer.
         me.timeLabel = me.game.add.text(me.game.world.centerX-5, 0, "00:00", {font: "75px Arial", fill: "#000"}); 
         me.timeLabel.anchor.setTo(0.5, 0);
         me.timeLabel.align = 'center';
@@ -368,14 +368,16 @@ Play.prototype = {
 		timerTracker = timeRemaining;
 		console.log(timerTracker);
 
+		timerTracker2 = timeRemaining;
+
 		
     },
 
 	update: function() {		
 
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		/*if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('WireCut');
-		}
+		}*/
 
 		if (timeRemaining < 60 && warningcheck == false )
         {
@@ -715,9 +717,8 @@ Play.prototype = {
 			keyText4 = game.add.text(850, 635, num4.keyCode, {font: "40px Arial", fill: "#000"}); 
 			orangecheck = false;
 		}
-		//key presses for the mechanic of the game.
 		
-
+		//key presses for the mechanic of the game.		
 		if ( game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_0)﻿ || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1) || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_2) || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_3)﻿﻿﻿
 		|| game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_4﻿ ) || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_5) || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_6)﻿ || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_7)﻿
 		|| game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_8)﻿ || game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_9)﻿ )
@@ -727,35 +728,38 @@ Play.prototype = {
 
 		else
 		{
+
 			check = false;
 		}
 		
+		//if the first number is down.
 		if(num1.isDown == true){
 			console.log('hit');
-			//click.play();
-			//beep.play();
+			click.play();
+			beep.play();
 			displayText(num1, displayNum1);
+			//if the first and second is down
 			if(num2.isDown == true) {
 				console.log('hit');
-				//click.play();
-				//beep.play();
+				click.play();
+				beep.play();
 				displayText(num2, displayNum2);
+				//if the first second and third is down
 				if(num3.isDown == true) {
 					console.log('hit');
-					//click.play();
-					//beep.play();
+					click.play();
+					beep.play();
 					displayText(num3, displayNum3);
+					//if all numbers are down
 					if(num4.isDown == true) {
 						console.log('hit');
-						//click.play();
+						click.play();
 						beep.play();
 						displayText(num4, displayNum4);
-						//game.state.start('GameOver');
 						score += 10;
    						scoreText.text = score + '% Diffused';
 
    						//win condition
-
    						if (score >= 100)
    						{
    							game.state.start('WireCut');
@@ -763,16 +767,18 @@ Play.prototype = {
    						game.paused = true;
    						game.paused = false;
    						game.time.events.add(Phaser.Timer.SECOND * 4, getNewCode, this);
-						//getNewCode();
 					}
 
 					else
 						if (num1.isDown == false || num2.isDown == false || num3.isDown == false)
 						{
+							//checks if the inputs are false
 							checker();
+
 						}
 
 						if (num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+							//checks if the inputs are false
 							checker();
 				}
 
@@ -780,10 +786,12 @@ Play.prototype = {
 				{
 					if (num1.isDown == false || num2.isDown == false)
 					{
+						//checks if the inputs are false
 						checker();
 					}
 
 					if(num4.isDown == true || num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+						//checks if the inputs are false
 						checker();
 
 				}
@@ -792,10 +800,12 @@ Play.prototype = {
 				else{
 					if (num1.isDown == false)
 					{
+						//checks if the inputs are false
 						checker();
 					}
 
 					if(num3.isDown == true || num4.isDown == true || num5.isDown == true || num6.isDown == true || num7.isDown == true || num8.isDown == true || num9.isDown == true || num10.isDown == true)
+						//checks if the inputs are false
 						checker();
 				}
 		
@@ -809,15 +819,10 @@ Play.prototype = {
 			}
 		}
 
-		 
-
-
-		
-		//console.log(game.input.keyboard.isDown(Phaser.Keyboard.NUMPAD_1));
-		//console.log(userInput);
 	}
 }
 
+//function that randomizes the indexs in the array
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
@@ -825,6 +830,7 @@ function shuffle(array) {
   }
 }
 
+//function that checks for the input of the user in the sequences.
 function checker()	{
 	error.play();
 	timeReduction = true;
@@ -834,6 +840,7 @@ function checker()	{
 	getNewCode();
 }
 
+//function that displays the UI bomb numbers on the screen.
 function displayText(numCode, displayNum) {
 	if(numCode.keyCode == 96) {
 	displayNum.text = '0';
@@ -866,14 +873,14 @@ function displayText(numCode, displayNum) {
 	displayNum.text = '9';
 	}
 }
-//updates the score counter
+//function that updates the score counter
 function updateCounter() {
 
     total++;
 
 }
 
-//grabs a new code for the mechanic whenever it is compeleted.
+//function that grabs a new code for the mechanic whenever it is compeleted.
 function getNewCode() {
 	//game.paused = false;
 		shuffle(numPadArray);
@@ -888,6 +895,7 @@ function getNewCode() {
 		num9 = numPadArray[8];
 		num10 = numPadArray[9];
 
+		//resets the UI variables
 		greencheck = true;
 		redcheck = true;
 		graycheck = true;
@@ -899,24 +907,18 @@ function getNewCode() {
 		purplecheck = true;
 		orangecheck = true;
 
-		
-		rndbombNum = game.rnd.integerInRange(1000,9999);
-		numPresent = true;
-		//bombNumText.text = rndbombNum;
-		keyText1.text = num1.keyCode;
-		keyText2.text = num2.keyCode;
-		keyText3.text = num3.keyCode;
-		keyText4.text = num4.keyCode;
 
 		//score += 15;
 
 }
 
+//functions for the warning sprite
 function checkwarning()
 {
 	warningcheck = false;
 }
 
+//intitalize wire-cutting variables
 var test, testbomb;
 var speed;
 var startConnect = false;
@@ -998,8 +1000,10 @@ WireCut.prototype = {
 		cut3 = cutWireArray[2];
 		cut4 = cutWireArray[3];
 		console.log(cut1.name);
-		//enable the cut to the given wire
+		//give cut instructions
 		cutInstructions = game.add.text(130, 165, "Cut the \n" + cut1.name + " Wire", {font: "40px Arial", fill: "#000"});
+		
+		//Assign the first instruction for the wire
 		if(cut1 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1018,7 +1022,7 @@ WireCut.prototype = {
 			green.events.onInputDown.add(WireListener, {'check1': 4}, this);
 		}
 	
-
+		//Assign the second instruction for the wire
 		if(cut2 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1036,7 +1040,8 @@ WireCut.prototype = {
 			green.inputEnabled = true;
 			green.events.onInputDown.add(WireListener, {'check2': 4}, this);
 		}
-	
+		
+		//Assign the third instruction for the wire
 		if(cut3 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1055,6 +1060,7 @@ WireCut.prototype = {
 			green.events.onInputDown.add(WireListener, {'check3': 4}, this);
 		}
 
+		//Assign the last instruction for the wire
 		if(cut4 == yellow) {
 			console.log('hit yellow');
 			yellow.inputEnabled = true;
@@ -1073,6 +1079,7 @@ WireCut.prototype = {
 			green.events.onInputDown.add(WireListener, {'check4': 4}, this);
 		}
 
+		//time updates for the game UI timer
 		var me = this;
 		me.startTime = new Date();
 		me.totalTime = timerTracker;
@@ -1154,7 +1161,7 @@ WireCut.prototype = {
 
 	update: function() {
 
-
+		//if all the wires are not connected shuffle the array once
 		if(allConnect == false){
 			if(shuffleOnce == true) {
 				shuffleOnce = false;
@@ -1164,7 +1171,8 @@ WireCut.prototype = {
 			cutInstructions.fontSize = 20;
 			cutInstructions.text = "Connect the\n" + leftArray[0].name + "\nto the \n" + rightArray[0].name;
 			startConnect = true;
-			//WireCollision(leftArray, rightArray);
+			
+			//cut the first to four wire in order.
 			if(game.physics.arcade.collide(leftArray[0], rightArray[0])) {
 				cutInstructions.text = "Connect the\n" + leftArray[1].name + "\nto the \n" + rightArray[1].name;
 				if(game.physics.arcade.collide(leftArray[1], rightArray[1])) {
@@ -1186,32 +1194,23 @@ WireCut.prototype = {
 
 }
 
-function WireCollision(leftConnectArray, rightConnectArray) {
-	var left1 = leftConnectArray[0];
-	var right1 = rightConnectArray[0];
-	var left2 = leftConnectArray[1];
-	var right2 = rightConnectArray[1];
-
-	game.physics.arcade.collide(left1, right1);
-	game.physics.arcade.collide(left2, right2);
-	console.log('hit');
-}
-
 var yellowLeft, yellowRight, redLeft, redRight, blueLeft, blueRight, greenLeft, greenRight;
 var leftArray = [], rightArray = [];
+//listen function that checks when the wire is clicked on mouse input
 function WireListener() {		
 	wirecheck1 = this.check1;
 	wirecheck2 = this.check2;
 	wirecheck3 = this.check3;
 	wirecheck4 = this.check4;
 
+/*Checks for the wires that cut in order from wirecheck1 to wirecheck4, checks which wire sprite was click
+and assigns it that color value wire to the array from Left wires and Right Wires*/
 if(connect1 == true) {
 	if(wirecheck1 == 1) {
 		cutInstructions.text = "Cut the \n" + cut2.name + " Wire";
 		console.log("this is  yellow check ");
 		game.debug.body(yellow);
 		yellow.destroy();
-		//spawn left cut yellow wire
 		yellowLeft = game.add.sprite(620,200, 'wires', 'Y(L)');
 		yellowLeft.name = "Left Yellow Wire";
 		yellowLeft.anchor.setTo(0.5,0.5);
@@ -1220,7 +1219,6 @@ if(connect1 == true) {
 		game.physics.arcade.enable(yellowLeft);
 		leftArray[0] = yellowLeft;
 
-		//spawn right cut yellow wire
 		yellowRight = game.add.sprite(1050, 190, 'wires', 'Y(R)');
 		yellowRight.name = "Right Yellow Wire";
 		yellowRight.anchor.setTo(0.5,0.5);
@@ -1572,7 +1570,7 @@ if(connect3 == false) {
 	
 }
 
-
+//game state for GameOver
 var GameOver = function(game) {};
 GameOver.prototype = {
 	preload: function() {
@@ -1586,12 +1584,14 @@ GameOver.prototype = {
 	},
 
 	update: function() {
+		//Press spacebar to restart
 			if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('Play');
 		}
 	}
 }
 
+//game win state
 var GameWin = function(game) {};
 GameWin.prototype = {
 	preload: function(){
@@ -1600,10 +1600,12 @@ GameWin.prototype = {
 
 	create: function(){
 		game.add.image(0,0, 'WinScreen');
-		menuText = game.add.text(10, 720, 'You have defused the bomb with ' + timerTracker + ' seconds!!!                            Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
+		var timeText = game.add.text(400, 215, 'With ' + timerTracker2 + ' Seconds Left!', { fontSize: '40px', fill: '#000' });
+		menuText = game.add.text(10, 720, 'You have defused the bomb ' + '                                Press Spacebar to play again', { fontSize: '32px', fill: '#FFF' });
 	},
 
 	update: function(){
+		//Press spacebar to restart the game.
 			if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       		game.state.start('Play');
 	}
